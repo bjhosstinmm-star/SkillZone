@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toma de Decisiones</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            scroll-behavior:smooth;
+        }
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#333;
+            color:white;
+            overflow-x:hidden;
+        }
+
+        img{
+            transition:transform 0.45s ease, filter 0.45s ease;
+        }
+
+        img:hover{
+            transform:scale(1.035);
+            filter:saturate(1.08) brightness(1.06);
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            img,
+            img:hover{
+                transition:none !important;
+                transform:none !important;
+            }
+        }
+
+        /* SCROLL */
+
+        ::-webkit-scrollbar{
+            width:10px;
+        }
+
+        ::-webkit-scrollbar-track{
+            background:#111;
+        }
+
+        ::-webkit-scrollbar-thumb{
+            background:#444;
+            border-radius:20px;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+            display:flex;
+            align-items:center;
+            padding:15px 20px;
+            background:rgba(0,0,0,0.92);
+            position:relative;
+            width:100%;
+            border-bottom:1px solid #222;
+        }
+
+        .menu-btn{
+            font-size:25px;
+            cursor:pointer;
+            background:none;
+            border:none;
+            color:white;
+            padding:5px 10px;
+        }
+
+        .texto-menu{
+            font-size:17px;
+            margin-left:4px;
+        }
+
+        .logo{
+            margin-left:12px;
+            font-size:20px;
+            font-weight:bold;
+            color:white;
+        }
+
+        /* MENU */
+
+        .menu{
+            display:none;
+            position:absolute;
+            top:70px;
+            left:0;
+            background:#111;
+            width:240px;
+            padding:10px;
+            border-radius:0 15px 15px 0;
+            box-shadow:0 0 20px rgba(255,255,255,0.05);
+            z-index:1000;
+        }
+
+        .menu a{
+            display:block;
+            color:#ddd;
+            text-decoration:none;
+            padding:14px;
+            border-bottom:1px solid #222;
+            font-weight:bold;
+            text-align:left;
+            border-radius:10px;
+            transition:0.3s;
+        }
+
+        .menu a:hover{
+            background:#222;
+            color:white;
+            transform:translateX(5px);
+        }
+
+        /* HERO */
+
+        .hero{
+            width:100%;
+            min-height:460px;
+            margin:0;
+            padding:58px max(20px,calc((100% - 1200px) / 2));
+            display:grid;
+            grid-template-columns:minmax(0, 1fr) minmax(320px, 0.95fr);
+            align-items:center;
+            gap:48px;
+            text-align:left;
+            background:
+                linear-gradient(110deg,rgba(0,0,0,0.78),rgba(0,0,0,0.48) 55%,rgba(0,0,0,0.72)),
+                url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=2000&q=85") center / cover;
+            animation:fadeUp 1s ease;
+        }
+
+        .hero-text .hero-etiqueta{
+            display:inline-block;
+            margin-bottom:18px;
+            padding:8px 13px;
+            color:#e8e8e8;
+            background:linear-gradient(120deg,#333,#1b1b1b);
+            border:1px solid #555;
+            border-radius:999px;
+            font-size:13px;
+            font-weight:bold;
+            letter-spacing:1px;
+        }
+
+        .hero h1{
+            margin-bottom:20px;
+            font-size:clamp(38px, 5vw, 62px);
+            line-height:1.08;
+            text-shadow:0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .hero h1 span{
+            display:block;
+            margin-top:8px;
+            color:#aaa;
+        }
+
+        .hero p{
+            max-width:560px;
+            color:#ccc;
+            font-size:18px;
+            line-height:1.8;
+        }
+
+        .hero-video{
+            display:block;
+            width:auto;
+            height:min(70vh,520px);
+            max-width:100%;
+            aspect-ratio:9 / 16;
+            align-self:center;
+            border:1px solid #444;
+            border-radius:20px;
+            background:#111;
+            box-shadow:0 18px 50px rgba(0,0,0,0.45);
+        }
+
+        @keyframes fadeUp{
+            from{
+                opacity:0;
+                transform:translateY(30px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        /* CONTENIDO */
+
+        .contenido{
+            width:90%;
+            max-width:1200px;
+            margin:auto;
+            padding:60px 0;
+        }
+
+        .card{
+            background:linear-gradient(145deg,#111,#181818);
+            margin-top:40px;
+            padding:30px;
+            border-radius:22px;
+            border:1px solid #222;
+            box-shadow:0 0 20px rgba(255,255,255,0.03);
+            transition:0.4s;
+            position:relative;
+            overflow:hidden;
+        }
+
+        .card::before{
+            content:"";
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:4px;
+            background:linear-gradient(to right,#444,#888,#444);
+        }
+
+        .card:hover{
+            transform:translateY(-8px);
+            background:linear-gradient(145deg,#181818,#202020);
+            box-shadow:0 0 30px rgba(255,255,255,0.05);
+        }
+
+        .card h2{
+            font-size:32px;
+            margin-bottom:20px;
+            color:#fff;
+        }
+
+        .card p{
+            color:#ccc;
+            line-height:1.9;
+            font-size:18px;
+        }
+
+        .img{
+            width:100%;
+            max-width:500px;
+            border-radius:18px;
+            margin:25px auto;
+            display:block;
+            transition:0.4s;
+        }
+
+        .card:hover .img{
+            transform:scale(1.03);
+        }
+
+        /* GRID */
+
+        .grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:25px;
+            margin-top:25px;
+        }
+
+        .mini-card{
+            background:linear-gradient(145deg,#1a1a1a,#202020);
+            padding:20px;
+            border-radius:18px;
+            transition:0.4s;
+            border:1px solid #222;
+        }
+
+        .mini-card:hover{
+            background:linear-gradient(145deg,#222,#2a2a2a);
+            transform:translateY(-6px) scale(1.02);
+            box-shadow:0 0 20px rgba(255,255,255,0.05);
+        }
+
+        .mini-card h3{
+            margin:15px 0;
+            color:white;
+            font-size:24px;
+        }
+
+        .mini-card p{
+            color:#bbb;
+            font-size:16px;
+            line-height:1.7;
+        }
+
+        .mini-card .ejemplo{
+            margin-top:12px;
+            padding-top:12px;
+            color:#e0e0e0;
+            border-top:1px solid #444;
+            font-size:15px;
+        }
+
+        .ejemplo strong{
+            color:#fff;
+        }
+
+        .mini-card img{
+            width:100%;
+            border-radius:14px;
+            height:200px;
+            object-fit:cover;
+            transition:0.4s;
+        }
+
+        .mini-card:hover img{
+            transform:scale(1.04);
+        }
+
+        /* PASOS */
+
+        .pasos{
+            margin-top:25px;
+        }
+
+        .paso{
+            background:#1a1a1a;
+            margin-top:15px;
+            padding:20px;
+            border-left:5px solid #666;
+            border-radius:14px;
+            transition:0.3s;
+        }
+
+        .paso:hover{
+            background:#232323;
+            transform:translateX(8px);
+        }
+
+        .paso h3{
+            margin-bottom:10px;
+            color:white;
+            font-size:22px;
+        }
+
+        .paso p{
+            color:#bbb;
+        }
+
+        .paso .ejemplo{
+            margin-top:8px;
+            padding:12px 14px;
+            color:#e0e0e0;
+            background:rgba(255,255,255,0.055);
+            border-radius:10px;
+            font-size:16px;
+        }
+
+        .practica-pasos,
+        .casos-jovenes{
+            margin-top:28px;
+            padding:24px;
+            background:linear-gradient(140deg,rgba(55,55,55,0.72),rgba(25,25,25,0.9));
+            border:1px solid #444;
+            border-radius:20px;
+        }
+
+        .practica-pasos h3,
+        .casos-jovenes h3{
+            margin-bottom:10px;
+            color:#fff;
+            font-size:24px;
+        }
+
+        .practica-pasos > p,
+        .casos-jovenes > p{
+            margin-bottom:16px;
+            color:#ccc;
+            font-size:16px;
+            line-height:1.7;
+        }
+
+        .practica-opciones{
+            display:flex;
+            flex-wrap:wrap;
+            gap:12px;
+        }
+
+        .practica-opciones button{
+            flex:1 1 230px;
+            min-height:48px;
+            padding:12px 16px;
+            color:#f4f4f4;
+            background:linear-gradient(145deg,#363636,#222);
+            border:1px solid #666;
+            border-radius:12px;
+            font:inherit;
+            font-weight:bold;
+            cursor:pointer;
+            transition:transform 0.2s,background 0.2s,border-color 0.2s;
+        }
+
+        .practica-opciones button:hover{
+            transform:translateY(-2px);
+            background:linear-gradient(145deg,#484848,#292929);
+            border-color:#aaa;
+        }
+
+        .practica-opciones button:focus-visible{
+            outline:3px solid #eee;
+            outline-offset:3px;
+        }
+
+        .resultado-practica{
+            min-height:52px;
+            margin-top:16px;
+            padding:13px 15px;
+            color:#e3e3e3;
+            background:rgba(255,255,255,0.06);
+            border-left:3px solid #aaa;
+            border-radius:8px;
+            line-height:1.6;
+        }
+
+        .casos-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:14px;
+        }
+
+        .caso{
+            padding:17px;
+            background:rgba(0,0,0,0.25);
+            border:1px solid #444;
+            border-radius:14px;
+        }
+
+        .caso h4{
+            margin-bottom:8px;
+            color:#f2f2f2;
+            font-size:18px;
+        }
+
+        .caso p{
+            color:#c8c8c8;
+            font-size:15px;
+            line-height:1.65;
+        }
+
+        /* FINAL */
+
+        .final{
+            text-align:center;
+            margin-top:60px;
+            padding:45px;
+            background:linear-gradient(145deg,#111,#1b1b1b);
+            border-radius:25px;
+            border:1px solid #222;
+            box-shadow:0 0 20px rgba(255,255,255,0.04);
+        }
+
+        .final h2{
+            font-size:38px;
+            margin-bottom:20px;
+        }
+
+        .final p{
+            color:#ccc;
+            max-width:800px;
+            margin:auto;
+            line-height:1.9;
+            font-size:18px;
+        }
+
+        .reto-decision{
+            display:grid;
+            grid-template-columns:minmax(240px, 0.85fr) minmax(0, 1.15fr);
+            align-items:center;
+            gap:30px;
+            margin-top:42px;
+            padding:28px;
+            background:linear-gradient(145deg,#171717,#222);
+            border:1px solid #3d3d3d;
+            border-radius:24px;
+            box-shadow:0 18px 50px rgba(0,0,0,0.28);
+        }
+
+        .decision-ilustracion{
+            padding:18px;
+            background:radial-gradient(circle at 50% 45%,#444,#202020 70%);
+            border:1px solid #4a4a4a;
+            border-radius:20px;
+        }
+
+        .decision-ilustracion svg{
+            display:block;
+            width:100%;
+            max-height:270px;
+            margin:auto;
+        }
+
+        .decision-ilustracion p{
+            margin:10px 4px 0;
+            color:#c8c8c8;
+            font-size:14px;
+            line-height:1.6;
+            text-align:center;
+        }
+
+        .reto-decision-contenido h2{
+            margin-bottom:12px;
+            font-size:clamp(25px, 3vw, 34px);
+        }
+
+        .reto-decision-contenido > p{
+            margin-bottom:18px;
+            color:#ccc;
+            line-height:1.7;
+        }
+
+        .opciones-decision{
+            display:flex;
+            flex-wrap:wrap;
+            gap:12px;
+        }
+
+        .opciones-decision button{
+            flex:1 1 190px;
+            min-height:48px;
+            padding:12px 16px;
+            color:#f4f4f4;
+            background:linear-gradient(145deg,#363636,#222);
+            border:1px solid #666;
+            border-radius:12px;
+            font:inherit;
+            font-weight:bold;
+            cursor:pointer;
+            transition:transform 0.2s,background 0.2s,border-color 0.2s;
+        }
+
+        .opciones-decision button:hover{
+            transform:translateY(-2px);
+            background:linear-gradient(145deg,#484848,#292929);
+            border-color:#aaa;
+        }
+
+        .opciones-decision button:focus-visible{
+            outline:3px solid #eee;
+            outline-offset:3px;
+        }
+
+        .respuesta-decision{
+            min-height:52px;
+            margin-top:16px;
+            padding:13px 15px;
+            color:#e3e3e3;
+            background:rgba(255,255,255,0.06);
+            border-left:3px solid #aaa;
+            border-radius:8px;
+            line-height:1.6;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:900px){
+
+            .hero h1{
+                font-size:clamp(38px, 7vw, 50px);
+            }
+
+            .hero p{
+                font-size:18px;
+            }
+
+            .hero{
+                grid-template-columns:1fr 1fr;
+                gap:28px;
+            }
+
+            .reto-decision{
+                grid-template-columns:minmax(210px, 0.8fr) minmax(0, 1.2fr);
+                padding:22px;
+            }
+
+        }
+
+        @media(max-width:680px){
+            .hero{
+                width:100%;
+                min-height:0;
+                padding:42px 16px;
+                grid-template-columns:1fr;
+                gap:25px;
+            }
+
+            .hero-text{
+                text-align:center;
+            }
+
+            .hero p{
+                margin:0 auto;
+            }
+
+            .reto-decision{
+                grid-template-columns:1fr;
+            }
+        }
+        
+/* BOTONES DE NAVEGACIÓN */
+
+.botones-secciones{
+    width:100%;
+    background:#111;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:15px;
+    padding:18px;
+    border-bottom:1px solid #222;
+}
+
+.botones-secciones a{
+    text-decoration:none;
+    color:white;
+    background:#1d1d1d;
+    padding:12px 18px;
+    border-radius:12px;
+    border:1px solid #333;
+    transition:.3s;
+    font-weight:bold;
+}
+
+.botones-secciones a:hover{
+    background:#333;
+    transform:translateY(-3px);
+}
+
+@media(max-width:900px){
+
+    .botones-secciones{
+        flex-direction:column;
+    }
+
+    .botones-secciones a{
+        width:90%;
+        text-align:center;
+    }
+
+}
+/* BOTÓN VOLVER ARRIBA */
+
+.btn-arriba {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+    background: linear-gradient(145deg, #111, #222);
+    color: #fff;
+
+    border: 1px solid #333;
+    font-size: 25px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 0 15px rgba(255,255,255,0.08);
+
+    transition: 0.3s;
+
+    z-index: 9999;
+}
+
+.btn-arriba:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(145deg, #222, #333);
+    box-shadow: 0 0 25px rgba(255,255,255,0.15);
+}
+
+
+/* FLECHA DEL BOTÓN */
+
+.flecha-arriba {
+    width: 14px;
+    height: 14px;
+
+    border-left: 4px solid #fff;
+    border-top: 4px solid #fff;
+
+    transform: rotate(45deg);
+
+    position: relative;
+}
+
+
+/* CUERPO DE LA FLECHA */
+
+.flecha-arriba::after {
+    content: "";
+
+    position: absolute;
+
+    width: 4px;
+    height: 22px;
+
+    background: #fff;
+
+    left: 5px;
+    top: -5px;
+
+    border-radius: 3px;
+
+    transform: rotate(-45deg);
+}
+
+.navbar {
+    position:sticky;
+    top:0;
+    z-index:1100;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-height:74px;
+    padding:12px max(20px, calc((100% - 1180px) / 2));
+    background:rgba(15,15,15,0.88);
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    box-shadow:0 12px 35px rgba(0,0,0,0.42);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+}
+
+.navbar::before {
+    content:"";
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+    height:2px;
+    background:linear-gradient(90deg,transparent,#f5f5f5 22%,#777 52%,#eee 78%,transparent);
+    opacity:0.8;
+    pointer-events:none;
+}
+
+.navbar .logo {
+    margin-left:4px;
+    color:#fff;
+    font-size:20px;
+    font-weight:bold;
+    letter-spacing:1px;
+    text-shadow:0 2px 16px rgba(255,255,255,0.12);
+}
+
+.navbar .menu-btn {
+    display:grid;
+    flex:0 0 46px;
+    width:46px;
+    height:46px;
+    place-items:center;
+    padding:0;
+    color:#f5f5f5;
+    background:linear-gradient(145deg,#353535,#1d1d1d);
+    border:1px solid #555;
+    border-radius:14px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.25);
+    font-size:25px;
+    cursor:pointer;
+    transition:transform 0.25s,background 0.25s,border-color 0.25s,box-shadow 0.25s;
+}
+
+.navbar .menu-btn:hover {
+    transform:translateY(-2px) rotate(-3deg);
+    background:linear-gradient(145deg,#484848,#252525);
+    border-color:#aaa;
+    box-shadow:0 9px 22px rgba(0,0,0,0.35);
+}
+
+.navbar .menu {
+    position:absolute;
+    top:calc(100% + 10px);
+    left:max(12px, calc((100% - 1180px) / 2));
+    width:min(300px, calc(100vw - 28px));
+    padding:12px;
+    background:linear-gradient(145deg,rgba(39,39,39,0.98),rgba(15,15,15,0.98));
+    border:1px solid #555;
+    border-radius:18px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.58);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    z-index:1000;
+}
+
+.navbar .menu a {
+    display:flex;
+    align-items:center;
+    padding:13px 14px;
+    color:#e6e6e6;
+    border-bottom:1px solid #353535;
+    border-radius:11px;
+    font-weight:bold;
+    text-decoration:none;
+    transition:background 0.2s,color 0.2s,transform 0.2s;
+}
+
+.navbar .menu a:hover {
+    transform:translateX(4px);
+    color:#fff;
+    background:linear-gradient(100deg,#373737,#242424);
+}
+
+.navbar .menu a:last-child {
+    border-bottom:0;
+}
+
+.navbar .menu-btn:focus-visible,
+.navbar .menu a:focus-visible {
+    outline:3px solid #eee;
+    outline-offset:3px;
+}
+
+body [id] {
+    scroll-margin-top:96px;
+}
+
+@media(max-width:560px) {
+    .navbar {
+        padding-right:14px;
+        padding-left:14px;
+    }
+
+    .navbar .logo {
+        font-size:18px;
+    }
+}
+        .navbar .menu{
+            display:none;grid-template-columns:minmax(0,1.1fr) minmax(205px,0.9fr);gap:13px;
+            top:calc(100% + 10px);left:max(12px,calc((100% - 1180px) / 2));width:min(660px,calc(100vw - 28px));
+            max-height:calc(100vh - 100px);padding:14px;overflow-y:auto;
+            background:radial-gradient(ellipse at 100% 0%,rgba(248,190,128,0.25),transparent 42%),radial-gradient(ellipse at 0% 100%,rgba(106,203,182,0.22),transparent 48%),linear-gradient(135deg,#3b334b,#263b3b 52%,#473c35);
+            border:1px solid rgba(234,221,201,0.34);border-radius:22px;box-shadow:0 22px 55px rgba(0,0,0,0.52),inset 0 1px rgba(255,255,255,0.16);
+            backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+        }
+        .menu-enlaces{display:grid;align-content:start;gap:4px;min-width:0}
+        .navbar .menu-enlaces a{padding:12px 13px;color:#f0eeeb;background:rgba(16,20,23,0.23);border:1px solid rgba(255,255,255,0.07);border-radius:12px;line-height:1.35;text-decoration:none;transition:background 0.2s,border-color 0.2s,transform 0.2s}
+        .navbar .menu-enlaces a:hover{transform:translateX(3px);color:#fff;background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.2)}
+        .menu-motivacion{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:20px;color:#f8f4ed;background:radial-gradient(circle at 90% 10%,rgba(255,231,180,0.2),transparent 35%),linear-gradient(155deg,rgba(245,207,160,0.17),rgba(127,196,174,0.13) 55%,rgba(179,158,216,0.17));border:1px solid rgba(255,255,255,0.19);border-radius:17px;box-shadow:inset 0 1px rgba(255,255,255,0.12)}
+        .menu-motivacion-etiqueta{display:flex;align-items:center;gap:8px;margin-bottom:13px;color:#f3d6a8;font-size:11px;font-weight:bold;letter-spacing:1.3px}
+        .menu-motivacion-etiqueta::before{width:7px;height:7px;background:#f3d6a8;border-radius:50%;content:"";box-shadow:0 0 12px rgba(243,214,168,0.8)}
+        .menu-motivacion p{margin:0;color:#fff;font-size:clamp(18px,2.1vw,23px);font-weight:bold;line-height:1.42;text-wrap:balance}
+        .menu-motivacion-firma{margin-top:17px;color:rgba(255,255,255,0.7);font-size:12px;line-height:1.45}
+        @media(max-width:620px){.navbar .menu{grid-template-columns:minmax(0,1fr);gap:10px;left:12px;width:calc(100% - 24px);padding:11px;border-radius:18px}.menu-motivacion{min-height:120px;padding:15px 17px}.menu-motivacion p{font-size:18px}}
+        .navbar{
+            position:sticky;top:0;z-index:1100;display:flex;align-items:center;gap:12px;min-height:74px;padding:12px max(20px,calc((100% - 1180px) / 2));
+            background:linear-gradient(110deg,rgba(32,31,29,.98),rgba(43,40,35,.97) 52%,rgba(31,30,28,.98));border-bottom:1px solid rgba(202,183,143,.23);box-shadow:0 12px 34px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.06);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)
+        }
+        .navbar::before{height:2px;background:linear-gradient(90deg,transparent,#8b7959 22%,#d0b982 50%,#8b7959 78%,transparent);opacity:.9;box-shadow:0 0 12px rgba(185,155,99,.18)}
+        .navbar .logo{display:flex;align-items:center;gap:10px;min-height:44px;margin-left:2px;padding:0 15px 0 13px;color:#f3f0e9;background:linear-gradient(100deg,rgba(255,255,255,.07),rgba(255,255,255,.015));border:1px solid rgba(210,192,155,.18);border-radius:999px;font-size:20px;font-weight:bold;letter-spacing:.6px}
+        .navbar .logo::before{display:grid;width:27px;height:27px;place-items:center;color:#29251d;background:linear-gradient(145deg,#d4c296,#9e8c68);border-radius:9px;content:"✦";font-size:15px;box-shadow:0 4px 13px rgba(0,0,0,.24)}
+        .navbar .menu-btn{display:grid;flex:0 0 46px;width:46px;height:46px;place-items:center;padding:0;color:#eeeae1;background:linear-gradient(145deg,#49453d,#292824);border:1px solid rgba(211,195,160,.35);border-radius:14px;box-shadow:0 6px 17px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.1);font-size:25px;cursor:pointer;transition:transform .2s,background .2s,border-color .2s}
+        .navbar .menu-btn:hover{transform:translateY(-2px);background:linear-gradient(145deg,#5a554b,#35322d);border-color:#c4ad7c}
+        .navbar .menu-btn[aria-expanded="true"]{color:#211f1a;background:linear-gradient(135deg,#d5c49b,#b9aa86);border-color:#e5d6b3;transform:rotate(90deg)}
+        .navbar .menu{display:none;position:absolute;top:calc(100% + 10px);left:max(12px,calc((100% - 1180px) / 2));grid-template-columns:minmax(0,1.1fr) minmax(205px,.9fr);gap:13px;width:min(660px,calc(100vw - 28px));max-height:calc(100vh - 100px);padding:14px;overflow-y:auto;background:radial-gradient(ellipse at 100% 0%,rgba(162,136,89,.2),transparent 43%),radial-gradient(ellipse at 0% 100%,rgba(119,112,91,.16),transparent 48%),linear-gradient(135deg,#302e29,#252521 53%,#38332b);border:1px solid rgba(207,187,145,.32);border-radius:20px;box-shadow:0 24px 58px rgba(0,0,0,.62),inset 0 1px rgba(255,255,255,.09);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+        .menu-enlaces{display:grid;align-content:start;gap:5px;min-width:0}
+        .navbar .menu-enlaces a{display:flex;align-items:center;padding:12px 13px;color:#e9e6df;background:rgba(15,15,14,.36);border:1px solid rgba(255,255,255,.065);border-radius:11px;line-height:1.35;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+        .navbar .menu-enlaces a:hover{transform:translateX(3px);color:#fff;background:rgba(189,169,126,.15);border-color:rgba(208,188,145,.32)}
+        .navbar .menu-enlaces a[aria-current="page"]{color:#f1dfb9;background:rgba(190,163,111,.14);border-color:rgba(209,181,128,.3);box-shadow:inset 3px 0 #b69a64}
+        .menu-motivacion{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:20px;color:#f4f0e6;background:radial-gradient(circle at 90% 10%,rgba(190,159,104,.16),transparent 38%),linear-gradient(155deg,rgba(94,82,59,.45),rgba(50,50,44,.72) 55%,rgba(67,58,45,.72));border:1px solid rgba(212,192,152,.22);border-radius:16px;box-shadow:inset 0 1px rgba(255,255,255,.08)}
+        .menu-motivacion-etiqueta{display:flex;align-items:center;gap:8px;margin-bottom:13px;color:#d7c49a;font-size:11px;font-weight:bold;letter-spacing:1.3px}
+        .menu-motivacion-etiqueta::before{width:7px;height:7px;background:#c6ad77;border-radius:50%;content:"";box-shadow:0 0 10px rgba(198,173,119,.45)}
+        .menu-motivacion p{margin:0;color:#fff;font-size:clamp(18px,2.1vw,23px);font-weight:bold;line-height:1.42;text-wrap:balance}
+        .menu-motivacion-firma{margin-top:17px;color:rgba(239,233,218,.68);font-size:12px;line-height:1.45}
+        @media(max-width:620px){.navbar{padding-right:14px;padding-left:14px}.navbar .logo{min-height:40px;padding:0 11px;font-size:16px}.navbar .menu-btn{flex-basis:44px;width:44px;height:44px}.navbar .menu{left:12px;width:calc(100% - 24px);grid-template-columns:minmax(0,1fr);gap:10px;padding:11px;border-radius:17px}.menu-motivacion{min-height:112px;padding:15px 17px}.menu-motivacion p{font-size:18px}}
+
+            body{
+                color:#f1eee6;
+                background-color:#25241f;
+                background-image:
+                    radial-gradient(ellipse at 12% 28%,rgba(164,143,101,.12),transparent 32rem),
+                    radial-gradient(ellipse at 88% 67%,rgba(115,111,91,.1),transparent 34rem),
+                    repeating-linear-gradient(135deg,transparent 0 74px,rgba(216,197,153,.018) 75px 76px),
+                    linear-gradient(145deg,#282722,#22221f 56%,#292720);
+            }
+            .hero{
+                position:relative;
+                isolation:isolate;
+                border-bottom:1px solid rgba(196,176,133,.22);
+                background:
+                    radial-gradient(ellipse at 80% 12%,rgba(186,157,100,.2),transparent 34%),
+                    linear-gradient(110deg,rgba(23,22,19,.86),rgba(34,32,27,.58) 55%,rgba(23,22,19,.82)),
+                    url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=2000&q=85") center / cover;
+            }
+            .hero > *{position:relative;z-index:1}
+            .hero-text .hero-etiqueta,
+            .section-kicker{
+                color:#e8dcc0;
+                background:linear-gradient(120deg,rgba(91,79,56,.88),rgba(42,40,34,.96));
+                border-color:rgba(206,184,137,.36);
+            }
+            .hero h1 span{color:#d0bd91}
+            .hero-video{
+                border-color:rgba(204,183,139,.48);
+                box-shadow:0 22px 56px rgba(0,0,0,.54),0 0 0 6px rgba(182,157,104,.08);
+            }
+            .contenido{position:relative}
+            .card{
+                background:
+                    radial-gradient(ellipse at 100% 0%,rgba(166,143,96,.09),transparent 42%),
+                    linear-gradient(145deg,#302e28,#201f1c);
+                border-color:rgba(191,173,135,.2);
+                box-shadow:0 18px 46px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.035);
+            }
+            .card::before{background:linear-gradient(90deg,transparent,#85724c 18%,#d0b982 50%,#85724c 82%,transparent)}
+            .card:hover{
+                background:
+                    radial-gradient(ellipse at 100% 0%,rgba(166,143,96,.13),transparent 42%),
+                    linear-gradient(145deg,#36332b,#24231f);
+                border-color:rgba(205,184,137,.38);
+                box-shadow:0 22px 50px rgba(0,0,0,.38),0 0 24px rgba(174,148,94,.06);
+            }
+            .card h2,.card h3{color:#f0e7d3}
+            .card h2{border-left-color:#b49b68}
+            .card p{color:#d0cec7}
+            .card .consejo-compacto,.card p.consejo-corto,
+            .paso .ejemplo,.caso{
+                background:linear-gradient(120deg,rgba(133,115,78,.17),rgba(255,255,255,.035));
+                border-color:rgba(190,169,125,.22);
+            }
+            .grid .mini-card,.paso,.practica-pasos,.casos-jovenes{
+                background:
+                    radial-gradient(ellipse at 92% 0%,rgba(175,151,101,.1),transparent 54%),
+                    linear-gradient(145deg,#302e28,#211f1c);
+                border-color:rgba(190,171,132,.22);
+                box-shadow:0 12px 30px rgba(0,0,0,.2);
+            }
+            .mini-card:hover,.paso:hover{
+                background:
+                    radial-gradient(ellipse at 92% 0%,rgba(175,151,101,.15),transparent 54%),
+                    linear-gradient(145deg,#38352d,#27251f);
+                border-color:rgba(207,185,136,.42);
+            }
+            .mini-card h3,.paso h3,.practica-pasos h3,.casos-jovenes h3{color:#ebdfc3}
+            .mini-card .ejemplo{border-color:rgba(197,176,132,.25)}
+            .reto-decision,.final{
+                background:
+                    radial-gradient(ellipse at 90% 0%,rgba(179,152,98,.17),transparent 42%),
+                    linear-gradient(145deg,#312f29,#201f1c);
+                border-color:rgba(199,179,137,.3);
+                box-shadow:0 22px 56px rgba(0,0,0,.34);
+            }
+            .decision-ilustracion{
+                background:radial-gradient(circle at 50% 45%,#4b4639,#24231f 72%);
+                border-color:rgba(202,181,137,.28);
+            }
+            .opciones-decision button{
+                color:#f2ead9;
+                background:linear-gradient(145deg,#514a3c,#302e28);
+                border-color:rgba(202,180,132,.4);
+            }
+            .opciones-decision button:hover{
+                background:linear-gradient(145deg,#625741,#3a352b);
+                border-color:#c7ad78;
+            }
+            .respuesta-decision{background:rgba(170,148,102,.11);border-left-color:#b99f69}
+            .final h2{color:#f1e5ca}
+            footer{color:#a9a393}
+            .decisiones-indice{
+                display:flex;
+                width:min(1160px,calc(100% - 40px));
+                flex-wrap:wrap;
+                justify-content:center;
+                gap:11px;
+                margin:24px auto 0;
+                padding:16px;
+                background:linear-gradient(145deg,rgba(48,46,40,.88),rgba(31,30,26,.92));
+                border:1px solid rgba(199,179,137,.24);
+                border-radius:20px;
+                box-shadow:0 14px 34px rgba(0,0,0,.24);
+            }
+            .decisiones-indice a{
+                display:flex;
+                min-height:46px;
+                align-items:center;
+                justify-content:center;
+                padding:11px 16px;
+                color:#eee8db;
+                background:linear-gradient(145deg,#514a3c,#302e28);
+                border:1px solid rgba(202,180,132,.3);
+                border-radius:13px;
+                font-size:14px;
+                font-weight:bold;
+                line-height:1.35;
+                text-align:center;
+                text-decoration:none;
+                transition:transform .2s,background .2s,border-color .2s;
+            }
+            .decisiones-indice a:hover{
+                transform:translateY(-2px);
+                color:#fff;
+                background:linear-gradient(145deg,#625741,#3a352b);
+                border-color:#c7ad78;
+            }
+            .decisiones-indice a:focus-visible{
+                outline:3px solid #d0b982;
+                outline-offset:3px;
+            }
+            @media(max-width:620px){
+                .decisiones-indice{width:calc(100% - 32px);gap:8px;padding:12px}
+                .decisiones-indice a{flex:1 1 145px;padding:10px 12px}
+            }
+            @media(max-width:680px){
+                .hero{background-position:center}
+                .card{padding:25px 20px}
+                .final{padding:30px 20px}
+            }
+    </style>
+    <link rel="stylesheet" href="../css/tema.css">
+</head>
+
+<body data-tema="decisiones">
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <button class="menu-btn" type="button" aria-label="Abrir menú de navegación" aria-controls="menu" aria-expanded="false" onclick="toggleMenu()">☰</button>
+        <div class="logo">Construye habilidades</div>
+
+        <div class="menu" id="menu">
+
+            <div class="menu-enlaces">
+            <a href="proyecto.html">🏠 Inicio</a>
+
+            <a href="habitos.html">📚 Hábitos</a>
+
+            <a href="juego.html">🎮 Aprende Jugando</a>
+
+            <a href="desafia%20tu%20conocimiento.html">🧩 Desafía tu conocimiento</a>
+
+            <a href="toma de decisiones.html">🌱 Toma de decisiones</a>
+
+            <a href="autonomia.html">🧠 Autonomía</a>
+
+            <a href="responsabilidad.html">🤝 Responsabilidad</a>
+            </div>
+            <aside class="menu-motivacion" aria-label="Mensaje motivador">
+                <span class="menu-motivacion-etiqueta">UN PASO A LA VEZ</span>
+                <p id="frase-motivadora" aria-live="polite"></p>
+                <span class="menu-motivacion-firma">Sigue creciendo a tu ritmo ✨</span>
+            </aside>
+        </div>
+
+    </div>
+    <!-- HERO -->
+
+    <section class="hero">
+        <div class="hero-text">
+            <span class="hero-etiqueta">TU VOZ, TUS ELECCIONES</span>
+            <h1>Aprende a tomar decisiones<span>No dejes que decidan por ti</span></h1>
+            <p>
+                Conoce tus opciones, piensa en lo que es importante para ti y elige
+                con confianza. Escuchar consejos puede ayudar, pero la decisión
+                también debe tomar en cuenta tus metas y valores.
+            </p>
+        </div>
+        <aside class="hero-guia" aria-label="Guía breve para tomar decisiones">
+            <span class="hero-guia-etiqueta">UNA PAUSA PUEDE AYUDAR</span>
+            <h2>Antes de elegir, mira el panorama</h2>
+            <p>Tomarte un momento para pensar puede ayudarte a elegir con más calma y seguridad.</p>
+            <ul class="hero-guia-lista">
+                <li><span>01</span><div><strong>Haz una pausa</strong><small>Reconoce qué está pasando y qué necesitas.</small></div></li>
+                <li><span>02</span><div><strong>Compara opciones</strong><small>Piensa en ventajas, límites y posibles apoyos.</small></div></li>
+                <li><span>03</span><div><strong>Mira más adelante</strong><small>Considera qué podría ocurrir después.</small></div></li>
+            </ul>
+            <a class="hero-guia-link" href="#pasos">Conocer los pasos <span aria-hidden="true">→</span></a>
+        </aside>
+    </section>
+
+    <nav class="decisiones-indice" aria-label="Ir directamente a una sección de toma de decisiones">
+        <a href="#que-es">¿Qué es decidir?</a>
+        <a href="#para-que">¿Para qué sirve?</a>
+        <a href="#tipos">Tipos de decisiones</a>
+        <a href="#pasos">Pasos para elegir</a>
+        <a href="#consejos">Consejos y situaciones</a>
+        <a href="#titulo-reto-decision">Pausa y decide</a>
+    </nav>
+
+    <section class="video-bajo video-bajo-vertical" aria-label="Video sobre toma de decisiones">
+        <video class="hero-video" controls preload="metadata" aria-label="Video sobre cómo aprender a tomar decisiones">
+            <source src="../mp4/toma de decsisiones.mp4" type="video/mp4">
+            Tu navegador no puede reproducir este video. Verifica que el archivo toma de decsisiones.mp4 esté en la carpeta mp4.
+        </video>
+    </section>
+
+    <!-- CONTENIDO -->
+
+    <div class="contenido">
+
+        <!-- SIGNIFICADO -->
+
+        <div class="card" id="que-es">
+
+            <h2>¿Qué es la toma de decisiones?</h2>
+
+            <img class="img"
+            src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d">
+
+            <p>
+                La toma de decisiones es la capacidad de elegir entre varias opciones
+                pensando en qué es lo mejor para ti y cuáles podrían ser las consecuencias.
+                Todos tomamos decisiones diariamente: desde elegir amistades hasta decidir
+                cómo actuar en momentos importantes.
+            </p>
+
+        </div>
+
+        <!-- PARA QUE SIRVE -->
+
+        <div class="card" id="para-que">
+
+            <h2>¿Para qué sirve?</h2>
+
+            <div class="grid">
+
+                <div class="mini-card">
+
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d">
+
+                    <h3>Resolver problemas</h3>
+
+                    <p>
+                        Te permite separar el problema en partes, pensar en varias
+                        soluciones y elegir una que sea segura y posible. No siempre
+                        existe una respuesta perfecta: se trata de buscar el siguiente
+                        paso que más te ayude.
+                    </p>
+                    <p class="ejemplo"><strong>Ejemplo:</strong> si tienes dos tareas para mañana, revisas cuánto tiempo toma cada una, empiezas por la más urgente y divides el trabajo en bloques.</p>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330">
+
+                    <h3>Mejorar tu futuro</h3>
+
+                    <p>
+                        Las elecciones pequeñas se van acumulando y pueden acercarte
+                        a una meta. Planear, practicar y pedir orientación abre más
+                        oportunidades que actuar siempre a última hora.
+                    </p>
+                    <p class="ejemplo"><strong>Ejemplo:</strong> practicar un poco cada semana para una prueba ayuda a llegar con menos estrés que intentar aprender todo la noche anterior.</p>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f">
+
+                    <h3>Ser más responsable</h3>
+
+                    <p>
+                        Significa reconocer que tus elecciones tienen efectos, cumplir
+                        los acuerdos que aceptas y hacerte cargo si algo no sale bien.
+                        Ser responsable no es no equivocarse: también es reparar y
+                        aprender.
+                    </p>
+                    <p class="ejemplo"><strong>Ejemplo:</strong> si olvidaste un trabajo, hablas con tu docente, preguntas cómo puedes mejorar y usas un recordatorio para la próxima vez.</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TIPOS -->
+
+        <div class="card" id="tipos">
+
+            <h2>Tipos de decisiones</h2>
+
+            <div class="grid">
+
+                <div class="mini-card">
+
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9">
+
+                    <h3>Decisiones simples</h3>
+
+                    <p>
+                        Son elecciones cotidianas que normalmente tienen pocas
+                        consecuencias y pueden cambiarse con facilidad. Aun así,
+                        conviene considerar lo básico: tiempo, comodidad, presupuesto
+                        o lo que necesitas en ese momento.
+                    </p>
+                    <p class="ejemplo"><strong>Ejemplos:</strong> elegir qué merendar, qué música escuchar mientras ordenas o qué cuaderno llevar. Si tienes poco tiempo, escoges una opción práctica y sigues con tu día.</p>
+
+                </div>
+
+                <div class="mini-card">
+
+                    <img src="https://images.pexels.com/photos/6209556/pexels-photo-6209556.jpeg?h=1000&amp;w=1500&amp;fit=crop" alt="Estudiante concentrado mientras estudia y planea su trabajo">
+
+                    <h3>Decisiones importantes</h3>
+
+                    <p>
+                        Pueden influir en tus estudios, relaciones, bienestar o metas
+                        durante más tiempo, por eso es útil no decidir con prisa ni
+                        solo para complacer a alguien. Busca información y conversa
+                        con una persona adulta de confianza cuando lo necesites.
+                    </p>
+                    <p class="ejemplo"><strong>Ejemplos:</strong> cómo organizarte para recuperar una materia, aceptar una responsabilidad nueva o resolver un conflicto con un amigo. Compara opciones y piensa qué podría ocurrir después.</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- PASOS -->
+
+        <div class="card" id="pasos">
+
+            <h2>Pasos para tomar buenas decisiones</h2>
+
+            <img class="img"
+            src="https://images.unsplash.com/photo-1498050108023-c5249f4df085">
+
+            <div class="pasos">
+
+                <div class="paso">
+                    <h3>1. Piensa en el problema</h3>
+                    <p>Describe los hechos sin exagerar ni adivinar lo que otros piensan. Pregúntate qué necesitas resolver y qué parte sí depende de ti.</p>
+                    <p class="ejemplo"><strong>Ejemplo:</strong> «Tengo una exposición el viernes y aún no he elegido el tema» es más claro que «todo me sale mal».</p>
+                </div>
+
+                <div class="paso">
+                    <h3>2. Mira tus opciones</h3>
+                    <p>Anota dos o tres caminos posibles, incluso uno que implique pedir ayuda, esperar o combinar alternativas. No te quedes solo con «sí» o «no» si hay otra opción.</p>
+                    <p class="ejemplo"><strong>Ejemplo:</strong> para preparar la exposición puedes trabajar solo, repartir partes con tu equipo o pedir al docente que aclare las instrucciones.</p>
+                </div>
+
+                <div class="paso">
+                    <h3>3. Analiza consecuencias</h3>
+                    <p>Piensa en lo que probablemente pasaría hoy y más adelante con cada opción. Considera cómo afecta tu tiempo, tus metas, tus límites y a otras personas.</p>
+                    <p class="ejemplo"><strong>Ejemplo:</strong> dejar todo para la última noche da más tiempo libre hoy, pero puede traer cansancio y menos tiempo para corregir.</p>
+                </div>
+
+                <div class="paso">
+                    <h3>4. Elige lo mejor</h3>
+                    <p>Elige la opción que encaje mejor con lo que valoras y con la información que tienes. Si es una decisión importante, tómate tiempo y pide consejo; escuchar no significa que otros decidan por ti.</p>
+                    <p class="ejemplo"><strong>Ejemplo:</strong> decides preparar hoy un esquema de la exposición y acuerdas con tu equipo cuándo revisarán el trabajo.</p>
+                </div>
+
+                <div class="paso">
+                    <h3>5. Aprende del resultado</h3>
+                    <p>Después, revisa qué funcionó y qué cambiarías. Si hubo un error, busca cómo repararlo y qué recordatorio o apoyo te serviría la próxima vez.</p>
+                    <p class="ejemplo"><strong>Ejemplo:</strong> si el equipo se organizó tarde, la próxima vez pueden fijar una fecha intermedia para compartir avances.</p>
+                </div>
+
+            </div>
+
+            <section class="practica-pasos" aria-labelledby="titulo-practica-pasos">
+                <h3 id="titulo-practica-pasos">Mini práctica: elige tu siguiente paso</h3>
+                <p>
+                    Te invitan a salir, pero tienes una tarea importante para mañana.
+                    ¿Qué opción te ayuda a equilibrar tus responsabilidades y tu tiempo?
+                </p>
+                <div class="practica-opciones">
+                    <button type="button" onclick="responderPaso('posponer')">Dejar la tarea para muy tarde</button>
+                    <button type="button" onclick="responderPaso('planear')">Calcular el tiempo y hacer un plan</button>
+                </div>
+                <p class="resultado-practica" id="resultado-practica" aria-live="polite">
+                    Elige una opción para ver cómo aplicar los pasos de decisión.
+                </p>
+            </section>
+
+        </div>
+
+        <!-- CONSEJOS -->
+
+        <div class="card" id="consejos">
+
+            <h2>Consejos para jóvenes</h2>
+
+            <div class="grid">
+
+                <div class="mini-card">
+                    <img src="https://images.pexels.com/photos/5212653/pexels-photo-5212653.jpeg?h=1000&amp;w=1500&amp;fit=crop" alt="Grupo de adolescentes colaborando alrededor de una computadora">
+                    <h3>No actúes por presión</h3>
+                    <p>Si alguien insiste, puedes decir «déjame pensarlo» o «no me siento cómodo con eso». Una amistad respetuosa acepta tus límites.</p>
+                </div>
+
+                <div class="mini-card">
+                    <img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a">
+                    <h3>Piensa antes de actuar</h3>
+                    <p>Cuando estés molesto o emocionado, haz una pausa, respira y espera antes de responder un mensaje o aceptar algo importante.</p>
+                </div>
+
+                <div class="mini-card">
+                    <img src="https://images.pexels.com/photos/8199634/pexels-photo-8199634.jpeg?h=1000&amp;w=1500&amp;fit=crop" alt="Estudiantes colaborando y aprendiendo en una biblioteca">
+                    <h3>Aprende de errores</h3>
+                    <p>Reconoce qué pasó sin insultarte, repara lo que puedas y prueba una estrategia distinta. Un error no define quién eres.</p>
+                </div>
+
+            </div>
+
+            <section class="casos-jovenes" aria-labelledby="titulo-casos-jovenes">
+                    <h3 id="titulo-casos-jovenes">Situaciones que pueden pasar</h3>
+                    <p>Estos ejemplos son ficticios: muestran consecuencias posibles y, sobre todo, cómo se puede aprender y corregir el rumbo.</p>
+                    <div class="casos-grid">
+                        <article class="caso">
+                            <h4>La tarea que quedó para después</h4>
+                            <p>Un estudiante acepta jugar toda la tarde sin revisar cuánto le falta de un proyecto. Al día siguiente entrega algo incompleto y se siente frustrado. <strong>Qué puede aprender:</strong> revisar fechas, dividir la tarea y reservar primero un bloque corto para avanzar.</p>
+                        </article>
+                        <article class="caso">
+                            <h4>Responder en caliente</h4>
+                            <p>Una joven publica un mensaje hiriente en el chat del curso durante una discusión y luego se da cuenta de que lastimó a una amiga. <strong>Qué puede aprender:</strong> esperar a calmarse, hablar en privado y disculparse con sinceridad para reparar la relación.</p>
+                        </article>
+                        <article class="caso">
+                            <h4>Decir que sí para encajar</h4>
+                            <p>Un joven acepta una actividad que no quiere hacer porque teme que el grupo se burle. Después se siente incómodo. <strong>Qué puede aprender:</strong> practicar una respuesta firme, pedir apoyo y buscar amistades que respeten sus límites.</p>
+                        </article>
+                    </div>
+                    <p class="nota-editorial">No son historias reales de personas identificables ni buscan asustar: cada situación permite pensar qué opciones había y cómo reparar una decisión.</p>
+            </section>
+
+        </div>
+
+        <section class="reto-decision" aria-labelledby="titulo-reto-decision">
+            <figure class="decision-ilustracion">
+                <svg viewBox="0 0 420 270" role="img" aria-labelledby="titulo-ilustracion descripcion-ilustracion">
+                    <title id="titulo-ilustracion">Una estudiante frente a dos caminos</title>
+                    <desc id="descripcion-ilustracion">Ilustración de una joven pensando antes de elegir entre dos caminos.</desc>
+                    <defs>
+                        <linearGradient id="camino" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" stop-color="#777"/>
+                            <stop offset="1" stop-color="#383838"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="210" cy="124" r="103" fill="#292929" stroke="#626262" stroke-width="2"/>
+                    <path d="M206 244 L165 169 Q155 151 173 137 L95 95 L109 77 L196 119 Q210 124 222 119 L310 77 L324 95 L246 137 Q263 151 253 169 L218 244Z" fill="url(#camino)" stroke="#a0a0a0" stroke-width="2"/>
+                    <path d="M210 124 L210 224" fill="none" stroke="#dedede" stroke-width="3" stroke-dasharray="8 9"/>
+                    <path d="M170 145 L126 104 M250 145 L294 104" fill="none" stroke="#e4e4e4" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="210" cy="75" r="24" fill="#d9d9d9"/>
+                    <path d="M180 112 Q210 91 240 112 L251 190 L169 190Z" fill="#8b8b8b" stroke="#efefef" stroke-width="2"/>
+                    <path d="M190 185 L184 235 M230 185 L236 235" stroke="#dedede" stroke-width="12" stroke-linecap="round"/>
+                    <path d="M172 134 L145 158 M248 134 L273 158" stroke="#d9d9d9" stroke-width="9" stroke-linecap="round"/>
+                    <path d="M190 68 Q197 49 217 53 Q235 56 237 74" fill="none" stroke="#f2f2f2" stroke-width="7" stroke-linecap="round"/>
+                    <circle cx="267" cy="47" r="5" fill="#eee"/>
+                    <circle cx="287" cy="35" r="3" fill="#aaa"/>
+                    <path d="M270 49 Q286 54 294 66" fill="none" stroke="#aaa" stroke-width="2" stroke-dasharray="4 5"/>
+                </svg>
+                <figcaption>
+                    La imagen representa una pausa para mirar los caminos posibles:
+                    pensar también es parte de elegir.
+                </figcaption>
+            </figure>
+            <div class="reto-decision-contenido">
+                <h2 id="titulo-reto-decision">Pausa y decide</h2>
+                <p>
+                    Tus amigos quieren que hagas algo que no te convence. ¿Qué podrías
+                    hacer antes de responder?
+                </p>
+                <div class="opciones-decision">
+                    <button type="button" onclick="responderDecision('presion')">Decir que sí por presión</button>
+                    <button type="button" onclick="responderDecision('pensar')">Pedir tiempo y pensarlo</button>
+                </div>
+                <p class="respuesta-decision" id="respuesta-decision" aria-live="polite">
+                    Elige una opción para ver una idea que te ayude a reflexionar.
+                </p>
+            </div>
+        </section>
+
+        <!-- FINAL -->
+
+        <div class="final">
+
+            <h2>Lo más importante</h2>
+
+            <p>
+                Cada decisión que tomas construye poco a poco la persona
+                en la que te convertirás. Pensar antes de actuar,
+                tener metas claras y aprender de los errores
+                te ayudará a crecer con más seguridad,
+                responsabilidad y confianza.
+            </p>
+
+        </div>
+
+   </div>
+
+<!-- BOTÓN VOLVER ARRIBA -->
+
+<button class="btn-arriba" onclick="irArriba()">
+    <span class="flecha-arriba"></span>
+</button>
+
+<script>
+
+    function toggleMenu() {
+
+        const menu = document.getElementById("menu");
+        const botonMenu = document.querySelector(".menu-btn");
+        const abrir = menu.style.display !== "grid";
+
+        menu.style.display = abrir ? "grid" : "none";
+        botonMenu.setAttribute("aria-expanded", String(abrir));
+        botonMenu.setAttribute(
+            "aria-label",
+            abrir ? "Cerrar menú de navegación" : "Abrir menú de navegación"
+        );
+
+    }
+
+
+    function irArriba() {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+    function responderPaso(opcion) {
+        const resultado = document.getElementById("resultado-practica");
+        resultado.textContent = opcion === "planear"
+            ? "Buena opción: revisa cuánto te falta, estima el tiempo y decide cuándo avanzar. Tal vez puedas completar una parte ahora y luego disfrutar tu salida sin dejar todo para el final."
+            : "Dejarlo para muy tarde puede aumentar el estrés y quitarte tiempo para revisar. Antes de aceptar, puedes mirar la tarea, calcular cuánto toma y proponer un plan que incluya descanso.";
+    }
+
+    function responderDecision(opcion) {
+        const respuesta = document.getElementById("respuesta-decision");
+        respuesta.textContent = opcion === "pensar"
+            ? "¡Buena estrategia! Puedes preguntar qué pasaría después, recordar qué quieres tú y decidir con calma. También puedes pedir consejo a alguien de confianza."
+            : "A veces decimos que sí para encajar. Puedes hacer una pausa, expresar cómo te sientes y elegir según tus límites y lo que consideras importante.";
+    }
+
+</script>
+<script>
+    (function(){
+        const frases=["Cada pequeño paso también cuenta.","No necesitas hacerlo perfecto; solo seguir intentándolo.","Lo que practicas hoy puede convertirse en tu fortaleza de mañana.","Equivocarte es parte de descubrir cómo hacerlo mejor.","Confía en lo que puedes aprender, paso a paso.","Tu esfuerzo de hoy está construyendo algo importante.","Cuando avanzas a tu ritmo, cada logro es tuyo.","Una buena decisión empieza por darte tiempo para pensar.","Pedir apoyo también es una forma valiente de avanzar.","Hoy puedes empezar de nuevo con una idea y un paso."];
+        const clave="frase-motivadora-anterior";
+        const guardada=window.sessionStorage.getItem(clave);
+        const anterior=guardada===null?-1:Number(guardada);
+        const indice=Number.isInteger(anterior)&&anterior>=0&&anterior<frases.length
+            ?(anterior+1+Math.floor(Math.random()*(frases.length-1)))%frases.length
+            :Math.floor(Math.random()*frases.length);
+        const elemento=document.getElementById("frase-motivadora");
+        window.sessionStorage.setItem(clave,String(indice));
+        if(elemento) elemento.textContent=frases[indice];
+    })();
+</script>
+</body>
+</html>

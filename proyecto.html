@@ -1,0 +1,2713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>construye tu desarrollo personal</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            scroll-behavior:smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background:#333;
+            color: #fff;
+            overflow-x:hidden;
+        }
+
+        img {
+            transition:transform 0.45s ease, filter 0.45s ease;
+        }
+
+        img:hover {
+            transform:scale(1.035);
+            filter:saturate(1.08) brightness(1.06);
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            img,
+            img:hover{
+                transition:none !important;
+                transform:none !important;
+            }
+        }
+
+        /* SCROLL */
+
+        ::-webkit-scrollbar{
+            width:10px;
+        }
+
+        ::-webkit-scrollbar-track{
+            background:#111;
+        }
+
+        ::-webkit-scrollbar-thumb{
+            background:#444;
+            border-radius:20px;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.92);
+            position: relative;
+            border-bottom: 1px solid #222;
+            width:100%;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            margin-left: 12px;
+            letter-spacing:1px;
+        }
+
+        .menu-btn {
+            font-size: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #fff;
+            padding:5px 10px;
+            transition:0.3s;
+        }
+
+        .menu-btn:hover{
+            transform:scale(1.05);
+        }
+
+        /* MENÚ MODERNO */
+
+        .menu {
+            display: none;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            background: linear-gradient(145deg,#111,#1a1a1a);
+            width: 240px;
+            padding: 10px;
+            border-radius: 0 15px 15px 0;
+            box-shadow: 0 0 25px rgba(255,255,255,0.05);
+            z-index:1000;
+            animation:menuAnim 0.3s ease;
+        }
+
+        @keyframes menuAnim{
+
+            from{
+                opacity:0;
+                transform:translateX(-20px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateX(0);
+            }
+
+        }
+
+        .menu a {
+            display: block;
+            color: #ddd;
+            text-decoration: none;
+            padding: 14px;
+            border-bottom: 1px solid #222;
+            font-weight: bold;
+            border-radius:10px;
+            transition:0.3s;
+        }
+
+        .menu a:hover {
+            background-color: #222;
+            color: #fff;
+            transform:translateX(5px);
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 92vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background:
+            linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.90)),
+            url('https://images.unsplash.com/photo-1506784983877-45594efa4cbe');
+
+            background-size: cover;
+            background-position: center;
+            padding:50px max(30px, calc((100% - 1200px) / 2));
+
+            animation:fadeHero 1.2s ease;
+        }
+
+        .hero-content {
+            width:100%;
+            max-width:1200px;
+            display:grid;
+            grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);
+            align-items:center;
+            gap:48px;
+        }
+
+        .hero-text {
+            text-align:left;
+        }
+
+        .hero-video{
+            display:block;
+            width:100%;
+            aspect-ratio:16 / 9;
+            background:#111;
+            border:1px solid #555;
+            border-radius:18px;
+            box-shadow:0 18px 48px rgba(0,0,0,0.45);
+        }
+
+        .hero-video-explanation{
+            margin-top:14px;
+            padding:14px 16px;
+            color:#e2e2e2;
+            background:rgba(0,0,0,0.55);
+            border:1px solid rgba(255,255,255,0.18);
+            border-left:3px solid #aaa;
+            border-radius:11px;
+            font-size:15px;
+            line-height:1.65;
+        }
+
+        @keyframes fadeHero{
+
+            from{
+                opacity:0;
+                transform:translateY(40px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+
+        }
+
+        .hero h1 {
+            font-size: 60px;
+            text-shadow:0 0 20px rgba(255,255,255,0.10);
+        }
+
+        .hero h1 span {
+            color: #8a8a8a;
+        }
+
+        .hero p {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #ccc;
+            max-width: 620px;
+            line-height:1.8;
+        }
+
+        .reflexion {
+            position:relative;
+            width:min(1120px, calc(100% - 40px));
+            margin:-34px auto 54px;
+            padding:clamp(26px, 5vw, 54px);
+            overflow:hidden;
+            background:
+                radial-gradient(ellipse at 92% 8%,rgba(235,235,235,0.13),transparent 34%),
+                linear-gradient(145deg,rgba(43,43,43,0.98),rgba(17,17,17,0.98) 72%);
+            border:1px solid #555;
+            border-radius:30px;
+            box-shadow:0 28px 80px rgba(0,0,0,0.48), inset 0 1px rgba(255,255,255,0.08);
+        }
+
+        .reflexion::before {
+            content:"";
+            position:absolute;
+            top:0;
+            right:8%;
+            left:8%;
+            height:2px;
+            background:linear-gradient(90deg,transparent,#eee,#888,transparent);
+            opacity:0.8;
+        }
+
+        .reflexion-cabecera {
+            max-width:760px;
+            margin:0 auto 30px;
+            text-align:center;
+        }
+
+        .reflexion-etiqueta {
+            display:inline-block;
+            margin-bottom:13px;
+            padding:8px 13px;
+            color:#eee;
+            background:linear-gradient(120deg,#393939,#202020);
+            border:1px solid #5a5a5a;
+            border-radius:999px;
+            font-size:13px;
+            font-weight:bold;
+            letter-spacing:1px;
+        }
+
+        .reflexion h2 {
+            margin-bottom:12px;
+            font-size:clamp(30px,4.5vw,48px);
+            line-height:1.12;
+        }
+
+        .reflexion-cabecera p {
+            color:#d0d0d0;
+            font-size:17px;
+            line-height:1.7;
+        }
+
+        .reflexion-form {
+            max-width:850px;
+            margin:auto;
+            padding:clamp(18px,3vw,30px);
+            background:rgba(8,8,8,0.58);
+            border:1px solid #444;
+            border-radius:22px;
+        }
+
+        .reflexion-form label {
+            display:block;
+            margin-bottom:9px;
+            color:#f0f0f0;
+            font-size:16px;
+            font-weight:bold;
+        }
+
+        .reflexion-form select,
+        .reflexion-form textarea {
+            display:block;
+            width:100%;
+            color:#f5f5f5;
+            background:linear-gradient(145deg,#292929,#191919);
+            border:1px solid #5a5a5a;
+            border-radius:13px;
+            font:inherit;
+        }
+
+        .reflexion-form select {
+            min-height:50px;
+            margin-bottom:22px;
+            padding:0 14px;
+        }
+
+        .reflexion-form select option {
+            color:#fff;
+            background:#222;
+        }
+
+        .pregunta-reflexion {
+            margin-bottom:12px;
+            padding:15px 17px;
+            color:#e6e6e6;
+            background:rgba(255,255,255,0.055);
+            border-left:3px solid #aaa;
+            border-radius:9px;
+            line-height:1.65;
+        }
+
+        .reflexion-form textarea {
+            min-height:150px;
+            padding:15px;
+            line-height:1.65;
+            resize:vertical;
+        }
+
+        .reflexion-form textarea::placeholder {
+            color:#aaa;
+        }
+
+        .reflexion-form select:focus-visible,
+        .reflexion-form textarea:focus-visible,
+        .reflexion-boton:focus-visible {
+            outline:3px solid #eee;
+            outline-offset:3px;
+        }
+
+        .reflexion-ayuda {
+            margin-top:9px;
+            color:#aaa;
+            font-size:13px;
+            line-height:1.55;
+        }
+
+        .reflexion-acciones {
+            display:flex;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:12px;
+            margin-top:20px;
+        }
+
+        .reflexion-boton {
+            min-height:48px;
+            padding:12px 20px;
+            color:#111;
+            background:linear-gradient(135deg,#f1f1f1,#aaa);
+            border:1px solid #fff;
+            border-radius:13px;
+            font:inherit;
+            font-weight:bold;
+            cursor:pointer;
+            transition:transform 0.2s,box-shadow 0.2s;
+        }
+
+        .reflexion-boton:hover {
+            transform:translateY(-2px);
+            box-shadow:0 9px 24px rgba(255,255,255,0.15);
+        }
+
+        .reflexion-reset {
+            min-height:44px;
+            padding:10px 14px;
+            color:#ddd;
+            background:transparent;
+            border:1px solid #555;
+            border-radius:12px;
+            font:inherit;
+            cursor:pointer;
+        }
+
+        .reflexion-reset:hover {
+            background:#292929;
+        }
+
+        .resultado-reflexion {
+            margin-top:22px;
+            padding:20px;
+            color:#eee;
+            background:linear-gradient(140deg,rgba(54,54,54,0.8),rgba(25,25,25,0.95));
+            border:1px solid #555;
+            border-radius:16px;
+        }
+
+        .resultado-reflexion[hidden] {
+            display:none;
+        }
+
+        .resultado-reflexion h3 {
+            margin-bottom:9px;
+            font-size:22px;
+        }
+
+        .resultado-reflexion p {
+            color:#d4d4d4;
+            line-height:1.7;
+        }
+
+        .nota-reflexion {
+            display:flex;
+            align-items:center;
+            gap:12px;
+            margin-bottom:12px;
+        }
+
+        .nota-reflexion strong {
+            display:grid;
+            width:52px;
+            height:52px;
+            flex:0 0 52px;
+            place-items:center;
+            color:#111;
+            background:linear-gradient(145deg,#f5f5f5,#999);
+            border-radius:16px;
+            font-size:24px;
+        }
+
+        .nota-reflexion span {
+            color:#ccc;
+            font-size:14px;
+        }
+
+        .reflexion-criterio {
+            margin-top:17px;
+            color:#aaa;
+            font-size:13px;
+            line-height:1.6;
+        }
+
+        @media(max-width:560px) {
+            .reflexion {
+                width:calc(100% - 28px);
+                margin:0 auto 38px;
+                padding:24px 16px;
+                border-radius:22px;
+            }
+
+            .reflexion-acciones {
+                align-items:stretch;
+                flex-direction:column;
+            }
+
+            .reflexion-boton,
+            .reflexion-reset {
+                width:100%;
+            }
+        }
+
+        /* INFO */
+
+        .explora {
+            overflow:hidden;
+            background:
+                radial-gradient(ellipse at 12% 18%, rgba(235,235,235,0.11), transparent 38%),
+                radial-gradient(ellipse at 88% 78%, rgba(150,150,150,0.12), transparent 35%),
+                linear-gradient(145deg,#0e0e0e,#1b1b1b 55%,#101010);
+        }
+
+        .info {
+            padding: 70px 30px;
+            text-align: center;
+        }
+
+        .info h2{
+            margin-bottom:12px;
+            font-size:clamp(34px, 4vw, 46px);
+        }
+
+        .info-intro {
+            max-width:650px;
+            margin:0 auto;
+            color:#ccc6d8;
+            font-size:18px;
+            line-height:1.7;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            align-items:stretch;
+            gap:20px;
+            max-width:1050px;
+            margin:38px auto 0;
+            flex-wrap:wrap;
+        }
+
+        .card {
+            display:flex;
+            flex:1 1 250px;
+            flex-direction:column;
+            align-items:center;
+            max-width:320px;
+            min-height:280px;
+            padding:28px 25px;
+            background:linear-gradient(145deg,rgba(43,43,43,0.97),rgba(22,22,22,0.98));
+            border:1px solid #414141;
+            border-radius:22px;
+            transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            position:relative;
+            overflow:hidden;
+        }
+
+        .card::before{
+            content:"";
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:3px;
+            background:linear-gradient(to right,#a98cff,#72d9e8,#f8d778);
+        }
+
+        .card:hover {
+            transform:translateY(-8px) scale(1.02);
+            border-color:#aaa;
+            box-shadow:0 18px 45px rgba(0,0,0,0.3);
+        }
+
+        .card-icono {
+            display:grid;
+            width:58px;
+            height:58px;
+            margin-bottom:17px;
+            place-items:center;
+            background:linear-gradient(145deg,#505050,#292929);
+            border:1px solid #666;
+            border-radius:18px;
+            font-size:29px;
+        }
+
+        .card h3 {
+            color: #fff;
+            font-size:24px;
+            margin-bottom:10px;
+        }
+
+        .card p {
+            flex:1;
+            color:#d0d0d0;
+            line-height:1.7;
+            font-size:16px;
+        }
+
+        .card-link {
+            display:inline-block;
+            margin-top:18px;
+            padding:10px 15px;
+            color:#f3f3f3;
+            background:linear-gradient(135deg,#3d3d3d,#252525);
+            border:1px solid #5b5b5b;
+            border-radius:999px;
+            font-size:14px;
+            font-weight:bold;
+            text-decoration:none;
+            transition:background 0.2s, transform 0.2s;
+        }
+
+        .card-link:hover {
+            transform:translateY(-2px);
+            background:linear-gradient(135deg,#555,#303030);
+        }
+
+        .card-link:focus-visible,
+        .reto button:focus-visible,
+        .habilidad summary:focus-visible,
+        .habilidad a:focus-visible {
+            outline:3px solid #eee;
+            outline-offset:4px;
+        }
+
+        .reto {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:22px;
+            max-width:1050px;
+            margin:30px auto 0;
+            padding:20px 24px;
+            background:linear-gradient(120deg,rgba(39,39,39,0.9),rgba(19,19,19,0.94));
+            border:1px solid #4a4a4a;
+            border-radius:18px;
+            text-align:left;
+        }
+
+        .reto-texto strong {
+            display:block;
+            margin-bottom:5px;
+            color:#f5d77c;
+            font-size:17px;
+        }
+
+        .reto-texto p {
+            color:#d3cedb;
+            font-size:15px;
+            line-height:1.6;
+        }
+
+        .reto button {
+            flex:0 0 auto;
+            padding:12px 17px;
+            color:#18131f;
+            background:linear-gradient(135deg,#f8d778,#f1b86b);
+            border:0;
+            border-radius:12px;
+            font:inherit;
+            font-weight:bold;
+            cursor:pointer;
+            transition:transform 0.2s, box-shadow 0.2s;
+        }
+
+        .reto button:hover {
+            transform:translateY(-2px);
+            box-shadow:0 8px 22px rgba(248,215,120,0.2);
+        }
+
+        /* LAS CUATRO HABILIDADES */
+
+        .habilidades {
+            padding:80px 30px;
+        }
+
+        .habilidades-contenido {
+            width:100%;
+            max-width:1200px;
+            margin:0 auto;
+            display:grid;
+            grid-template-columns:minmax(0, 1.15fr) minmax(300px, 0.85fr);
+            align-items:center;
+            gap:55px;
+        }
+
+        .habilidades-texto .etiqueta {
+            display:inline-block;
+            margin-bottom:14px;
+            padding:8px 13px;
+            color:#e3e3e3;
+            background:linear-gradient(120deg,#303030,#1d1d1d);
+            border:1px solid #4d4d4d;
+            border-radius:999px;
+            font-size:14px;
+            font-weight:bold;
+            letter-spacing:0.5px;
+        }
+
+        .habilidades h2 {
+            margin-bottom:16px;
+            font-size:clamp(32px, 4vw, 46px);
+            line-height:1.15;
+        }
+
+        .habilidades-intro {
+            max-width:680px;
+            margin-bottom:28px;
+            color:#d0d0d0;
+            font-size:18px;
+            line-height:1.8;
+        }
+
+        .habilidades-lista {
+            display:grid;
+            grid-template-columns:repeat(2, minmax(0, 1fr));
+            gap:14px;
+        }
+
+        .habilidad {
+            align-self:start;
+            padding:18px;
+            background:linear-gradient(145deg,#262626,#151515);
+            border:1px solid #3b3b3b;
+            border-radius:16px;
+            transition:transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+        }
+
+        .habilidad:hover,
+        .habilidad[open] {
+            transform:translateY(-4px);
+            border-color:#999;
+            box-shadow:0 12px 30px rgba(0,0,0,0.25);
+        }
+
+        .habilidad summary {
+            display:flex;
+            align-items:center;
+            gap:11px;
+            color:#fff;
+            font-size:17px;
+            font-weight:bold;
+            cursor:pointer;
+            list-style:none;
+        }
+
+        .habilidad summary::-webkit-details-marker {
+            display:none;
+        }
+
+        .habilidad summary::after {
+            content:"+";
+            margin-left:auto;
+            color:#e5e5e5;
+            font-size:23px;
+            transition:transform 0.25s;
+        }
+
+        .habilidad[open] summary::after {
+            content:"−";
+        }
+
+        .habilidad-icono {
+            display:grid;
+            flex:0 0 38px;
+            width:38px;
+            height:38px;
+            place-items:center;
+            background:linear-gradient(145deg,#414141,#252525);
+            border:1px solid #4a4a4a;
+            border-radius:12px;
+            font-size:20px;
+        }
+
+        .habilidad p {
+            margin:14px 0 12px;
+            color:#d0d0d0;
+            font-size:15px;
+            line-height:1.7;
+        }
+
+        .habilidad a {
+            color:#e0e0e0;
+            font-size:14px;
+            font-weight:bold;
+            text-decoration:none;
+        }
+
+        .habilidad a:hover {
+            color:#fff;
+            text-decoration:underline;
+        }
+
+        .pensando {
+            position:relative;
+            min-height:410px;
+            display:grid;
+            place-items:center;
+            overflow:hidden;
+            background:
+                radial-gradient(circle at 50% 55%, #414141 0, #262626 52%, #171717 78%);
+            border:1px solid #4c4c4c;
+            border-radius:30px;
+            box-shadow:0 25px 70px rgba(0,0,0,0.35);
+        }
+
+        .pensando .decor {
+            position:absolute;
+            border-radius:50%;
+            background:#f0f0f0;
+            box-shadow:0 0 18px rgba(240,240,240,0.75);
+            animation:brillar 2.8s ease-in-out infinite;
+        }
+
+        .pensando .decor-uno {
+            top:18%;
+            left:16%;
+            width:7px;
+            height:7px;
+        }
+
+        .pensando .decor-dos {
+            top:31%;
+            right:13%;
+            width:5px;
+            height:5px;
+            animation-delay:0.8s;
+        }
+
+        .pensando .decor-tres {
+            bottom:22%;
+            left:12%;
+            width:5px;
+            height:5px;
+            animation-delay:1.3s;
+        }
+
+        .pensando::before,
+        .pensando::after {
+            content:"";
+            position:absolute;
+            border:1px solid rgba(235,235,235,0.16);
+            border-radius:50%;
+        }
+
+        .pensando::before {
+            width:280px;
+            height:280px;
+        }
+
+        .pensando::after {
+            width:350px;
+            height:350px;
+        }
+
+        .pensando svg {
+            position:relative;
+            z-index:1;
+            width:min(100%, 390px);
+            height:auto;
+            animation:flotar 4s ease-in-out infinite;
+        }
+
+        .burbuja-idea {
+            transform-origin:center;
+            animation:brillar 2.8s ease-in-out infinite;
+        }
+
+        .ilustracion-persona {
+            filter:drop-shadow(0 15px 18px rgba(7,5,12,0.24));
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform:translateY(0); }
+            50% { transform:translateY(-9px); }
+        }
+
+        @keyframes brillar {
+            0%, 100% { opacity:0.85; transform:scale(1); }
+            50% { opacity:1; transform:scale(1.06); }
+        }
+
+        .pensando-pie {
+            position:absolute;
+            z-index:2;
+            right:18px;
+            bottom:16px;
+            left:18px;
+            color:#dedede;
+            font-size:14px;
+            text-align:center;
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior:auto !important;
+                animation-duration:0.01ms !important;
+                animation-iteration-count:1 !important;
+                transition-duration:0.01ms !important;
+            }
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:900px){
+
+            .hero {
+                padding:50px 30px;
+            }
+
+            .hero-content{
+                gap:28px;
+            }
+
+            .hero h1{
+                font-size:45px;
+            }
+
+            .hero p{
+                font-size:18px;
+            }
+
+            .habilidades-contenido {
+                grid-template-columns:1fr;
+                gap:35px;
+            }
+
+            .pensando {
+                min-height:350px;
+            }
+
+            .reto {
+                align-items:flex-start;
+                flex-direction:column;
+            }
+
+        }
+
+        @media(max-width:560px){
+
+            .hero{
+                min-height:0;
+                padding:42px 18px 52px;
+            }
+
+            .hero-content{
+                grid-template-columns:1fr;
+                gap:28px;
+            }
+
+            .habilidades {
+                padding:60px 20px;
+            }
+
+            .habilidades-lista {
+                grid-template-columns:1fr;
+            }
+
+            .pensando {
+                min-height:300px;
+            }
+        }
+
+        .biblioteca{
+            position:relative;
+            padding:76px 24px 86px;
+            overflow:hidden;
+            background:
+                radial-gradient(ellipse at 12% 10%,rgba(235,235,235,0.09),transparent 35%),
+                linear-gradient(145deg,#151515,#0c0c0c 70%,#191919);
+            border-top:1px solid #292929;
+        }
+
+        .biblioteca-cabecera{
+            max-width:760px;
+            margin:0 auto 34px;
+            text-align:center;
+        }
+
+        .biblioteca-etiqueta{
+            display:inline-block;
+            margin-bottom:13px;
+            padding:8px 13px;
+            color:#eee;
+            background:linear-gradient(120deg,#393939,#202020);
+            border:1px solid #5a5a5a;
+            border-radius:999px;
+            font-size:13px;
+            font-weight:bold;
+            letter-spacing:1px;
+        }
+
+        .biblioteca h2{
+            margin-bottom:12px;
+            font-size:clamp(32px,4.5vw,48px);
+            line-height:1.12;
+        }
+
+        .biblioteca-cabecera p{
+            color:#ccc;
+            font-size:17px;
+            line-height:1.7;
+        }
+
+        .lecturas-grid{
+            display:grid;
+            grid-template-columns:minmax(0,1fr);
+            gap:20px;
+            min-width:0;
+        }
+
+        .biblioteca-contenido{
+            display:grid;
+            grid-template-columns:minmax(260px,0.78fr) minmax(0,1.72fr);
+            align-items:start;
+            gap:24px;
+            width:min(1180px,100%);
+            margin:0 auto;
+        }
+
+        .biblioteca-foto{
+            position:relative;
+            height:680px;
+            margin:0;
+            overflow:hidden;
+            background:#171717;
+            border:1px solid #555;
+            border-radius:24px;
+            box-shadow:0 20px 48px rgba(0,0,0,0.35);
+        }
+
+        .biblioteca-foto img{
+            display:block;
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            object-position:center;
+        }
+
+        .biblioteca-foto figcaption{
+            position:absolute;
+            right:0;
+            bottom:0;
+            left:0;
+            padding:44px 18px 18px;
+            color:#fff;
+            background:linear-gradient(transparent,rgba(0,0,0,0.86));
+            font-size:15px;
+            line-height:1.5;
+        }
+
+        .biblioteca-foto figcaption strong{
+            display:block;
+            margin-bottom:5px;
+            font-size:19px;
+        }
+
+        .biblioteca-foto figcaption small{
+            display:block;
+            margin-top:8px;
+            color:#ddd;
+            font-size:11px;
+        }
+
+        .biblioteca-foto figcaption a{
+            color:#fff;
+            text-underline-offset:2px;
+        }
+
+        .lecturas-grid{
+            grid-template-columns:repeat(2,minmax(0,1fr));
+        }
+
+        .lectura-card{
+            position:relative;
+            display:flex;
+            min-width:0;
+            flex-direction:column;
+            padding:22px;
+            overflow:hidden;
+            background:
+                radial-gradient(ellipse at 90% 0%,rgba(255,255,255,0.08),transparent 45%),
+                linear-gradient(145deg,#292929,#151515);
+            border:1px solid #444;
+            border-radius:22px;
+            box-shadow:0 16px 36px rgba(0,0,0,0.26);
+            transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;
+        }
+
+        .lectura-card:hover{
+            transform:translateY(-6px);
+            border-color:#888;
+            box-shadow:0 22px 45px rgba(0,0,0,0.38);
+        }
+
+        .lectura-arte{
+            display:grid;
+            min-height:150px;
+            margin-bottom:18px;
+            place-items:center;
+            overflow:hidden;
+            background:radial-gradient(circle at 50% 55%,#414141,#222 72%);
+            border:1px solid #4c4c4c;
+            border-radius:16px;
+        }
+
+        .lectura-arte svg{
+            display:block;
+            width:170px;
+            max-width:80%;
+            height:130px;
+            overflow:visible;
+            filter:drop-shadow(0 9px 12px rgba(0,0,0,0.3));
+            animation:flotar-lectura 4s ease-in-out infinite;
+        }
+
+        .lectura-card:nth-child(2) .lectura-arte svg{animation-delay:-0.7s}
+        .lectura-card:nth-child(3) .lectura-arte svg{animation-delay:-1.3s}
+        .lectura-card:nth-child(4) .lectura-arte svg{animation-delay:-1.9s}
+        .lectura-card:nth-child(5) .lectura-arte svg{animation-delay:-2.5s}
+
+        @keyframes flotar-lectura{
+            0%,100%{transform:translateY(0) rotate(-1deg)}
+            50%{transform:translateY(-7px) rotate(1deg)}
+        }
+
+        .lectura-card h3{
+            margin-bottom:12px;
+            color:#fff;
+            font-size:23px;
+        }
+
+        .lectura-card ul{
+            display:grid;
+            gap:12px;
+            margin:0 0 16px;
+            padding-left:20px;
+            color:#e4e4e4;
+        }
+
+        .lectura-card li{
+            padding-left:2px;
+            line-height:1.55;
+        }
+
+        .lectura-card li::marker{
+            color:#bbb;
+        }
+
+        .lectura-card li strong{
+            color:#fff;
+        }
+
+        .lectura-card p{
+            margin-top:auto;
+            padding-top:13px;
+            color:#bdbdbd;
+            border-top:1px solid #444;
+            font-size:14px;
+            line-height:1.6;
+        }
+
+        .biblioteca-nota{
+            width:min(1180px,100%);
+            margin:20px auto 0;
+            padding:15px 18px;
+            color:#d8d8d8;
+            background:rgba(255,255,255,0.045);
+            border-left:3px solid #888;
+            border-radius:10px;
+            font-size:14px;
+            line-height:1.65;
+        }
+
+        @media(max-width:900px){
+            .biblioteca-contenido{
+                grid-template-columns:minmax(0,1fr);
+            }
+
+            .biblioteca-foto{
+                height:340px;
+                min-height:0;
+            }
+
+            .biblioteca-foto img{
+                min-height:0;
+                object-position:center 42%;
+            }
+        }
+
+        @media(max-width:620px){
+            .lecturas-grid{
+                grid-template-columns:minmax(0,1fr);
+            }
+        }
+
+        @media(max-width:560px){
+            .biblioteca{
+                padding:58px 16px 64px;
+            }
+
+            .biblioteca-foto{
+                height:280px;
+                border-radius:19px;
+            }
+
+            .lectura-card{
+                padding:18px;
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            .lectura-arte svg{
+                animation:none !important;
+            }
+        }
+
+        .navbar .menu{
+            display:none;
+            grid-template-columns:minmax(0,1.15fr) minmax(210px,0.85fr);
+            gap:14px;
+            top:calc(100% + 10px);
+            left:max(12px,calc((100% - 1180px) / 2));
+            width:min(680px,calc(100vw - 28px));
+            max-height:calc(100vh - 100px);
+            padding:14px;
+            overflow-y:auto;
+            background:
+                radial-gradient(ellipse at 100% 0%,rgba(249,190,127,0.25),transparent 42%),
+                radial-gradient(ellipse at 0% 100%,rgba(106,203,182,0.22),transparent 48%),
+                linear-gradient(135deg,#3b334b,#263b3b 52%,#473c35);
+            border:1px solid rgba(234,221,201,0.34);
+            border-radius:22px;
+            box-shadow:0 22px 55px rgba(0,0,0,0.52),inset 0 1px rgba(255,255,255,0.16);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+        }
+
+        .menu-enlaces{
+            display:grid;
+            align-content:start;
+            gap:4px;
+            min-width:0;
+        }
+
+        .navbar .menu-enlaces a{
+            padding:12px 13px;
+            color:#f0eeeb;
+            background:rgba(16,20,23,0.23);
+            border:1px solid rgba(255,255,255,0.07);
+            border-radius:12px;
+            line-height:1.35;
+            text-decoration:none;
+            transition:background 0.2s,border-color 0.2s,transform 0.2s;
+        }
+
+        .navbar .menu-enlaces a:hover{
+            transform:translateX(3px);
+            color:#fff;
+            background:rgba(255,255,255,0.14);
+            border-color:rgba(255,255,255,0.2);
+        }
+
+        .menu-motivacion{
+            display:flex;
+            min-width:0;
+            flex-direction:column;
+            justify-content:center;
+            padding:20px;
+            color:#f8f4ed;
+            background:
+                radial-gradient(circle at 90% 10%,rgba(255,231,180,0.2),transparent 35%),
+                linear-gradient(155deg,rgba(245,207,160,0.17),rgba(127,196,174,0.13) 55%,rgba(179,158,216,0.17));
+            border:1px solid rgba(255,255,255,0.19);
+            border-radius:17px;
+            box-shadow:inset 0 1px rgba(255,255,255,0.12);
+        }
+
+        .menu-motivacion-etiqueta{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            margin-bottom:13px;
+            color:#f3d6a8;
+            font-size:11px;
+            font-weight:bold;
+            letter-spacing:1.3px;
+        }
+
+        .menu-motivacion-etiqueta::before{
+            width:7px;
+            height:7px;
+            background:#f3d6a8;
+            border-radius:50%;
+            content:"";
+            box-shadow:0 0 12px rgba(243,214,168,0.8);
+        }
+
+        .menu-motivacion p{
+            margin:0;
+            color:#fff;
+            font-size:clamp(18px,2.1vw,23px);
+            font-weight:bold;
+            line-height:1.42;
+            text-wrap:balance;
+        }
+
+        .menu-motivacion-firma{
+            margin-top:17px;
+            color:rgba(255,255,255,0.7);
+            font-size:12px;
+            line-height:1.45;
+        }
+
+        @media(max-width:620px){
+            .navbar .menu{
+                grid-template-columns:minmax(0,1fr);
+                gap:10px;
+                left:12px;
+                width:calc(100% - 24px);
+                padding:11px;
+                border-radius:18px;
+            }
+
+            .menu-motivacion{
+                min-height:120px;
+                padding:15px 17px;
+            }
+
+            .menu-motivacion p{
+                font-size:18px;
+            }
+        }
+
+        .navbar{
+            position:sticky;
+            z-index:1100;
+            overflow:visible;
+            padding-top:13px;
+            padding-bottom:13px;
+            background:
+                radial-gradient(ellipse at 8% 0%,rgba(139,111,203,0.28),transparent 34%),
+                radial-gradient(ellipse at 92% 100%,rgba(90,181,164,0.2),transparent 38%),
+                linear-gradient(105deg,rgba(25,25,33,0.97),rgba(30,39,40,0.96) 55%,rgba(39,32,39,0.97));
+            border-bottom:1px solid rgba(220,207,255,0.22);
+            box-shadow:0 12px 35px rgba(0,0,0,0.38),inset 0 1px rgba(255,255,255,0.08);
+            backdrop-filter:blur(20px);
+            -webkit-backdrop-filter:blur(20px);
+        }
+
+        .navbar::before{
+            height:3px;
+            background:linear-gradient(90deg,#8870ce,#72d2c1 35%,#f2cc7f 68%,#cf8eaa);
+            opacity:0.95;
+            box-shadow:0 0 16px rgba(142,121,204,0.45);
+        }
+
+        .navbar::after{
+            position:absolute;
+            right:0;
+            bottom:-1px;
+            left:0;
+            height:1px;
+            background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);
+            content:"";
+            pointer-events:none;
+        }
+
+        .navbar .logo{
+            position:relative;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            min-height:44px;
+            margin-left:2px;
+            padding:0 15px 0 13px;
+            background:linear-gradient(100deg,rgba(255,255,255,0.075),rgba(255,255,255,0.02));
+            border:1px solid rgba(255,255,255,0.1);
+            border-radius:999px;
+            letter-spacing:0.6px;
+        }
+
+        .navbar .logo::before{
+            display:grid;
+            width:27px;
+            height:27px;
+            place-items:center;
+            color:#292235;
+            background:linear-gradient(145deg,#f1d994,#c9a7e8 70%,#92d8c1);
+            border-radius:9px;
+            content:"✦";
+            font-size:15px;
+            box-shadow:0 4px 13px rgba(215,184,137,0.22);
+        }
+
+        .navbar .menu-btn{
+            color:#f4edff;
+            background:linear-gradient(145deg,#51466c,#283d41 64%,#334d49);
+            border:1px solid rgba(224,211,255,0.4);
+            box-shadow:0 7px 18px rgba(0,0,0,0.26),inset 0 1px rgba(255,255,255,0.18);
+        }
+
+        .navbar .menu-btn:hover{
+            background:linear-gradient(145deg,#665583,#315450);
+            border-color:rgba(255,238,197,0.75);
+            box-shadow:0 9px 23px rgba(0,0,0,0.35),0 0 18px rgba(150,129,205,0.2);
+        }
+
+        .navbar .menu-btn[aria-expanded="true"]{
+            color:#211c2d;
+            background:linear-gradient(135deg,#f1d994,#b9e4d0);
+            border-color:#fff0c7;
+            transform:rotate(90deg);
+        }
+
+        .navbar .menu{
+            background:
+                radial-gradient(ellipse at 100% 0%,rgba(255,207,145,0.3),transparent 43%),
+                radial-gradient(ellipse at 0% 100%,rgba(121,223,194,0.25),transparent 48%),
+                linear-gradient(135deg,#3d3450,#253f42 53%,#514035);
+            border-color:rgba(244,226,197,0.48);
+            box-shadow:0 25px 60px rgba(0,0,0,0.56),inset 0 1px rgba(255,255,255,0.2),0 0 35px rgba(123,105,169,0.12);
+        }
+
+        .hero{
+            position:relative;
+            isolation:isolate;
+            overflow:hidden;
+            min-height:clamp(600px,88vh,800px);
+            background:
+                linear-gradient(112deg,rgba(13,13,20,0.94),rgba(15,18,22,0.78) 49%,rgba(14,19,20,0.82)),
+                url("https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1800&q=85") center / cover;
+        }
+
+        .hero::before{
+            position:absolute;
+            z-index:-1;
+            top:8%;
+            right:-8%;
+            width:min(58vw,700px);
+            aspect-ratio:1;
+            background:
+                radial-gradient(circle at 45% 42%,rgba(197,164,244,0.19),transparent 42%),
+                radial-gradient(circle,transparent 58%,rgba(191,175,237,0.14) 58.2%,transparent 58.8%);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:50%;
+            box-shadow:0 0 0 22px rgba(255,255,255,0.018),0 0 0 52px rgba(255,255,255,0.012);
+            content:"";
+            pointer-events:none;
+        }
+
+        .hero::after{
+            position:absolute;
+            z-index:-1;
+            right:0;
+            bottom:0;
+            left:0;
+            height:170px;
+            background:linear-gradient(transparent,rgba(16,16,19,0.72));
+            content:"";
+        }
+
+        .hero-content{
+            position:relative;
+            z-index:1;
+        }
+
+        .hero-text{
+            position:relative;
+            padding:clamp(24px,4vw,44px);
+            background:linear-gradient(145deg,rgba(25,24,34,0.72),rgba(22,25,26,0.4));
+            border:1px solid rgba(255,255,255,0.17);
+            border-radius:28px;
+            box-shadow:0 22px 55px rgba(0,0,0,0.28),inset 0 1px rgba(255,255,255,0.12);
+            backdrop-filter:blur(10px);
+            -webkit-backdrop-filter:blur(10px);
+        }
+
+        .hero-text::before{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            margin-bottom:20px;
+            padding:9px 13px;
+            color:#f5e6c4;
+            background:rgba(255,231,180,0.09);
+            border:1px solid rgba(255,231,180,0.22);
+            border-radius:999px;
+            content:"✦ APRENDE · PRACTICA · CRECE";
+            font-size:11px;
+            font-weight:bold;
+            letter-spacing:1.2px;
+        }
+
+        .hero h1{
+            font-size:clamp(42px,5.3vw,68px);
+            line-height:1.06;
+            text-wrap:balance;
+        }
+
+        .hero h1 span{
+            display:block;
+            margin-top:5px;
+            background:linear-gradient(90deg,#f6d991,#d4b8f1 55%,#9ee1cb);
+            background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .hero p{
+            color:#e5e0e8;
+            font-size:clamp(17px,1.6vw,20px);
+        }
+
+        .hero-media{
+            position:relative;
+            padding:10px;
+            background:linear-gradient(145deg,rgba(249,220,161,0.58),rgba(182,153,226,0.5) 48%,rgba(117,218,190,0.48));
+            border-radius:24px;
+            box-shadow:0 28px 65px rgba(0,0,0,0.48),0 0 42px rgba(188,161,228,0.15);
+            transform:rotate(1deg);
+            transition:transform 0.35s ease,box-shadow 0.35s ease;
+        }
+
+        .hero-media:hover{
+            transform:rotate(0) translateY(-4px);
+            box-shadow:0 32px 70px rgba(0,0,0,0.5),0 0 46px rgba(188,161,228,0.22);
+        }
+
+        .hero-video{
+            border-color:rgba(255,255,255,0.26);
+            border-radius:17px;
+            box-shadow:0 12px 28px rgba(0,0,0,0.32);
+        }
+
+        .hero-video-explanation{
+            margin:10px 2px 0;
+            background:rgba(22,22,28,0.88);
+            border-color:rgba(255,255,255,0.13);
+            border-left-color:#eacb8b;
+        }
+
+        .explora{
+            position:relative;
+            background:
+                radial-gradient(ellipse at 12% 18%,rgba(169,139,219,0.13),transparent 38%),
+                radial-gradient(ellipse at 88% 78%,rgba(104,207,177,0.1),transparent 35%),
+                linear-gradient(145deg,#111116,#1b1a22 55%,#101616);
+        }
+
+        .info h2{
+            background:linear-gradient(90deg,#fff,#d8c6f1 47%,#a5e4ce);
+            background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .info h2::before{
+            display:block;
+            margin-bottom:12px;
+            color:#f0d28f;
+            content:"✦  DESCUBRE TU PRÓXIMO PASO  ✦";
+            font-size:12px;
+            letter-spacing:1.8px;
+            -webkit-text-fill-color:#f0d28f;
+        }
+
+        .card{
+            background:
+                radial-gradient(ellipse at 100% 0%,rgba(188,157,230,0.14),transparent 45%),
+                linear-gradient(145deg,rgba(39,36,48,0.98),rgba(17,18,21,0.98));
+            border-color:rgba(205,190,237,0.19);
+            box-shadow:0 16px 38px rgba(0,0,0,0.22),inset 0 1px rgba(255,255,255,0.06);
+        }
+
+        .card:nth-child(2){
+            background:
+                radial-gradient(ellipse at 100% 0%,rgba(99,211,187,0.15),transparent 45%),
+                linear-gradient(145deg,rgba(33,43,43,0.98),rgba(17,18,21,0.98));
+        }
+
+        .card:nth-child(3){
+            background:
+                radial-gradient(ellipse at 100% 0%,rgba(246,203,124,0.15),transparent 45%),
+                linear-gradient(145deg,rgba(47,40,34,0.98),rgba(17,18,21,0.98));
+        }
+
+        .card-icono{
+            background:linear-gradient(145deg,#66558a,#347366 72%,#967447);
+            border-color:rgba(255,255,255,0.23);
+            box-shadow:0 9px 22px rgba(0,0,0,0.22),inset 0 1px rgba(255,255,255,0.2);
+        }
+
+        .card-link{
+            color:#f3e8c7;
+            background:linear-gradient(120deg,rgba(133,108,177,0.35),rgba(64,128,112,0.24));
+            border-color:rgba(221,204,163,0.3);
+        }
+
+        .reto{
+            background:
+                radial-gradient(ellipse at 100% 0%,rgba(239,197,121,0.17),transparent 42%),
+                linear-gradient(120deg,rgba(49,41,52,0.95),rgba(23,35,34,0.96));
+            border-color:rgba(233,203,145,0.28);
+            box-shadow:0 14px 35px rgba(0,0,0,0.22),inset 0 1px rgba(255,255,255,0.08);
+        }
+
+        .habilidades{
+            position:relative;
+            background:
+                radial-gradient(ellipse at 8% 50%,rgba(177,145,222,0.11),transparent 35%),
+                linear-gradient(180deg,rgba(17,17,21,0.72),rgba(25,24,29,0.93));
+        }
+
+        .habilidades-texto .etiqueta{
+            color:#e9ddf8;
+            background:linear-gradient(120deg,rgba(102,78,139,0.48),rgba(39,54,50,0.62));
+            border-color:rgba(209,187,237,0.3);
+        }
+
+        .habilidades h2{
+            background:linear-gradient(100deg,#fff,#dfcdf4 52%,#a9dfce);
+            background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .habilidad{
+            background:
+                radial-gradient(ellipse at 100% 0%,rgba(151,126,190,0.12),transparent 45%),
+                linear-gradient(145deg,#29262f,#17191a);
+            border-color:rgba(214,199,231,0.2);
+        }
+
+        .habilidad:nth-child(2){border-top:2px solid rgba(126,207,181,0.55)}
+        .habilidad:nth-child(3){border-top:2px solid rgba(226,192,119,0.55)}
+        .habilidad:nth-child(4){border-top:2px solid rgba(207,151,172,0.55)}
+
+        .habilidad[open]{
+            background:linear-gradient(145deg,rgba(83,66,106,0.68),rgba(23,35,32,0.92));
+        }
+
+        .habilidad-icono{
+            background:linear-gradient(145deg,#65558a,#347366 78%);
+            border-color:rgba(255,255,255,0.2);
+        }
+
+        .habilidad a{color:#d9caef}
+        .habilidad a:hover{color:#b8ead6}
+
+        .pensando{
+            background:
+                radial-gradient(circle at 50% 44%,rgba(250,221,153,0.22),transparent 24%),
+                radial-gradient(circle at 50% 55%,#4a4254 0,#252832 53%,#18201f 82%);
+            border-color:rgba(214,196,228,0.27);
+            box-shadow:0 28px 70px rgba(0,0,0,0.38),inset 0 1px rgba(255,255,255,0.12);
+        }
+
+        .biblioteca{
+            background:
+                radial-gradient(ellipse at 0% 4%,rgba(171,137,218,0.16),transparent 38%),
+                radial-gradient(ellipse at 100% 90%,rgba(95,195,165,0.12),transparent 38%),
+                linear-gradient(145deg,#15151b,#0c1111 70%,#1b1719);
+            border-top-color:rgba(215,198,235,0.14);
+        }
+
+        .biblioteca-etiqueta{
+            color:#f3dfbb;
+            background:linear-gradient(120deg,rgba(100,77,133,0.62),rgba(43,77,68,0.58));
+            border-color:rgba(228,205,160,0.3);
+        }
+
+        .biblioteca h2{
+            background:linear-gradient(100deg,#fff,#e1cdf1 52%,#a7e0c8);
+            background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .biblioteca-foto{
+            border-color:rgba(234,207,163,0.38);
+            box-shadow:0 22px 52px rgba(0,0,0,0.42),0 0 30px rgba(180,144,205,0.1);
+        }
+
+        .lectura-card{
+            background:
+                radial-gradient(ellipse at 100% 0%,rgba(166,139,201,0.13),transparent 45%),
+                linear-gradient(145deg,#2c2932,#151819);
+            border-color:rgba(211,191,229,0.2);
+        }
+
+        .lectura-card:nth-child(2n){
+            background:
+                radial-gradient(ellipse at 100% 0%,rgba(105,194,165,0.13),transparent 45%),
+                linear-gradient(145deg,#292f2d,#151819);
+        }
+
+        .biblioteca-nota{
+            background:linear-gradient(100deg,rgba(135,104,170,0.15),rgba(83,156,130,0.12));
+            border-left-color:#c4a5df;
+        }
+
+        @media(max-width:900px){
+            .hero{min-height:0}
+            .hero-text{padding:30px}
+        }
+
+        @media(max-width:560px){
+            .navbar .logo{
+                min-height:40px;
+                padding:0 11px;
+                font-size:16px;
+            }
+
+            .navbar .menu-btn{
+                flex-basis:44px;
+                width:44px;
+                height:44px;
+            }
+
+            .hero-text{padding:24px 20px}
+            .hero-text::before{font-size:9px;letter-spacing:0.8px}
+            .hero-media{padding:7px;border-radius:18px}
+            .hero-video{border-radius:13px}
+            .pensando{border-radius:22px}
+        }
+
+        /* BOTÓN VOLVER ARRIBA */
+
+        .btn-arriba {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+
+            background: linear-gradient(145deg, #111, #222);
+            color: #fff;
+
+            border: 1px solid #333;
+            font-size: 25px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow: 0 0 15px rgba(255,255,255,0.08);
+
+            transition: 0.3s;
+
+            z-index: 9999;
+        }
+
+        .btn-arriba:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(145deg, #222, #333);
+            box-shadow: 0 0 25px rgba(255,255,255,0.15);
+        }
+
+        /* FLECHA DEL BOTÓN */
+
+        .flecha-arriba {
+            width: 14px;
+            height: 14px;
+
+            border-left: 4px solid #fff;
+            border-top: 4px solid #fff;
+
+            transform: rotate(45deg);
+
+            position: relative;
+        }
+
+        /* CUERPO DE LA FLECHA */
+
+        .flecha-arriba::after {
+            content: "";
+
+            position: absolute;
+
+            width: 4px;
+            height: 22px;
+
+            background: #fff;
+
+            left: 5px;
+            top: -5px;
+
+            border-radius: 3px;
+
+            transform: rotate(-45deg);
+        }
+
+        .navbar {
+            position:sticky;
+            top:0;
+            z-index:1100;
+            display:flex;
+            align-items:center;
+            gap:12px;
+            min-height:74px;
+            padding:12px max(20px, calc((100% - 1180px) / 2));
+            background:rgba(15,15,15,0.88);
+            border-bottom:1px solid rgba(255,255,255,0.12);
+            box-shadow:0 12px 35px rgba(0,0,0,0.42);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+        }
+
+        .navbar::before {
+            content:"";
+            position:absolute;
+            top:0;
+            right:0;
+            left:0;
+            height:2px;
+            background:linear-gradient(90deg,transparent,#f5f5f5 22%,#777 52%,#eee 78%,transparent);
+            opacity:0.8;
+            pointer-events:none;
+        }
+
+        .navbar .logo {
+            margin-left:4px;
+            color:#fff;
+            font-size:20px;
+            font-weight:bold;
+            letter-spacing:1px;
+            text-shadow:0 2px 16px rgba(255,255,255,0.12);
+        }
+
+        .navbar .menu-btn {
+            display:grid;
+            flex:0 0 46px;
+            width:46px;
+            height:46px;
+            place-items:center;
+            padding:0;
+            color:#f5f5f5;
+            background:linear-gradient(145deg,#353535,#1d1d1d);
+            border:1px solid #555;
+            border-radius:14px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.25);
+            font-size:25px;
+            cursor:pointer;
+            transition:transform 0.25s,background 0.25s,border-color 0.25s,box-shadow 0.25s;
+        }
+
+        .navbar .menu-btn:hover {
+            transform:translateY(-2px) rotate(-3deg);
+            background:linear-gradient(145deg,#484848,#252525);
+            border-color:#aaa;
+            box-shadow:0 9px 22px rgba(0,0,0,0.35);
+        }
+
+        .navbar .menu {
+            position:absolute;
+            top:calc(100% + 10px);
+            left:max(12px, calc((100% - 1180px) / 2));
+            width:min(300px, calc(100vw - 28px));
+            padding:12px;
+            background:linear-gradient(145deg,rgba(39,39,39,0.98),rgba(15,15,15,0.98));
+            border:1px solid #555;
+            border-radius:18px;
+            box-shadow:0 20px 50px rgba(0,0,0,0.58);
+            backdrop-filter:blur(16px);
+            -webkit-backdrop-filter:blur(16px);
+            z-index:1000;
+        }
+
+        .navbar .menu a {
+            display:flex;
+            align-items:center;
+            padding:13px 14px;
+            color:#e6e6e6;
+            border-bottom:1px solid #353535;
+            border-radius:11px;
+            font-weight:bold;
+            text-decoration:none;
+            transition:background 0.2s,color 0.2s,transform 0.2s;
+        }
+
+        .navbar .menu a:hover {
+            transform:translateX(4px);
+            color:#fff;
+            background:linear-gradient(100deg,#373737,#242424);
+        }
+
+        .navbar .menu a:last-child {
+            border-bottom:0;
+        }
+
+        .navbar .menu-btn:focus-visible,
+        .navbar .menu a:focus-visible {
+            outline:3px solid #eee;
+            outline-offset:3px;
+        }
+
+        body [id] {
+            scroll-margin-top:96px;
+        }
+
+        @media(max-width:560px) {
+            .navbar {
+                padding-right:14px;
+                padding-left:14px;
+            }
+
+            .navbar .logo {
+                font-size:18px;
+            }
+        }
+        .navbar .menu{
+            display:none;
+            grid-template-columns:minmax(0,1.1fr) minmax(205px,0.9fr);
+            gap:13px;
+            top:calc(100% + 10px);
+            left:max(12px,calc((100% - 1180px) / 2));
+            width:min(660px,calc(100vw - 28px));
+            max-height:calc(100vh - 100px);
+            padding:14px;
+            overflow-y:auto;
+            background:
+                radial-gradient(ellipse at 100% 0%,rgba(248,190,128,0.25),transparent 42%),
+                radial-gradient(ellipse at 0% 100%,rgba(106,203,182,0.22),transparent 48%),
+                linear-gradient(135deg,#3b334b,#263b3b 52%,#473c35);
+            border:1px solid rgba(234,221,201,0.34);
+            border-radius:22px;
+            box-shadow:0 22px 55px rgba(0,0,0,0.52),inset 0 1px rgba(255,255,255,0.16);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+        }
+
+        .menu-enlaces{display:grid;align-content:start;gap:4px;min-width:0}
+        .navbar .menu-enlaces a{
+            padding:12px 13px;
+            color:#f0eeeb;
+            background:rgba(16,20,23,0.23);
+            border:1px solid rgba(255,255,255,0.07);
+            border-radius:12px;
+            line-height:1.35;
+            text-decoration:none;
+            transition:background 0.2s,border-color 0.2s,transform 0.2s;
+        }
+        .navbar .menu-enlaces a:hover{
+            transform:translateX(3px);
+            color:#fff;
+            background:rgba(255,255,255,0.14);
+            border-color:rgba(255,255,255,0.2);
+        }
+        .menu-motivacion{
+            display:flex;
+            min-width:0;
+            flex-direction:column;
+            justify-content:center;
+            padding:20px;
+            color:#f8f4ed;
+            background:
+                radial-gradient(circle at 90% 10%,rgba(255,231,180,0.2),transparent 35%),
+                linear-gradient(155deg,rgba(245,207,160,0.17),rgba(127,196,174,0.13) 55%,rgba(179,158,216,0.17));
+            border:1px solid rgba(255,255,255,0.19);
+            border-radius:17px;
+            box-shadow:inset 0 1px rgba(255,255,255,0.12);
+        }
+        .menu-motivacion-etiqueta{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            margin-bottom:13px;
+            color:#f3d6a8;
+            font-size:11px;
+            font-weight:bold;
+            letter-spacing:1.3px;
+        }
+        .menu-motivacion-etiqueta::before{
+            width:7px;
+            height:7px;
+            background:#f3d6a8;
+            border-radius:50%;
+            content:"";
+            box-shadow:0 0 12px rgba(243,214,168,0.8);
+        }
+        .menu-motivacion p{
+            margin:0;
+            color:#fff;
+            font-size:clamp(18px,2.1vw,23px);
+            font-weight:bold;
+            line-height:1.42;
+            text-wrap:balance;
+        }
+        .menu-motivacion-firma{margin-top:17px;color:rgba(255,255,255,0.7);font-size:12px;line-height:1.45}
+        @media(max-width:620px){
+            .navbar .menu{
+                grid-template-columns:minmax(0,1fr);
+                gap:10px;
+                left:12px;
+                width:calc(100% - 24px);
+                padding:11px;
+                border-radius:18px;
+            }
+            .menu-motivacion{min-height:120px;padding:15px 17px}
+            .menu-motivacion p{font-size:18px}
+        }
+
+        .navbar{
+            background:
+                radial-gradient(ellipse at 8% 0%,rgba(139,111,203,0.28),transparent 34%),
+                radial-gradient(ellipse at 92% 100%,rgba(90,181,164,0.2),transparent 38%),
+                linear-gradient(105deg,rgba(25,25,33,0.97),rgba(30,39,40,0.96) 55%,rgba(39,32,39,0.97));
+            border-bottom:1px solid rgba(220,207,255,0.22);
+            box-shadow:0 12px 35px rgba(0,0,0,0.38),inset 0 1px rgba(255,255,255,0.08);
+            backdrop-filter:blur(20px);
+            -webkit-backdrop-filter:blur(20px);
+        }
+
+        .navbar::before{
+            height:3px;
+            background:linear-gradient(90deg,#8870ce,#72d2c1 35%,#f2cc7f 68%,#cf8eaa);
+            opacity:0.95;
+            box-shadow:0 0 16px rgba(142,121,204,0.45);
+        }
+
+        .navbar .logo{
+            gap:10px;
+            min-height:44px;
+            margin-left:2px;
+            padding:0 15px 0 13px;
+            background:linear-gradient(100deg,rgba(255,255,255,0.075),rgba(255,255,255,0.02));
+            border:1px solid rgba(255,255,255,0.1);
+            border-radius:999px;
+            letter-spacing:0.6px;
+        }
+
+        .navbar .logo::before{
+            display:grid;
+            width:27px;
+            height:27px;
+            place-items:center;
+            color:#292235;
+            background:linear-gradient(145deg,#f1d994,#c9a7e8 70%,#92d8c1);
+            border-radius:9px;
+            content:"✦";
+            font-size:15px;
+            box-shadow:0 4px 13px rgba(215,184,137,0.22);
+        }
+
+        .navbar .menu-btn{
+            color:#f4edff;
+            background:linear-gradient(145deg,#51466c,#283d41 64%,#334d49);
+            border:1px solid rgba(224,211,255,0.4);
+            box-shadow:0 7px 18px rgba(0,0,0,0.26),inset 0 1px rgba(255,255,255,0.18);
+        }
+
+        .navbar .menu-btn:hover{
+            background:linear-gradient(145deg,#665583,#315450);
+            border-color:rgba(255,238,197,0.75);
+            box-shadow:0 9px 23px rgba(0,0,0,0.35),0 0 18px rgba(150,129,205,0.2);
+        }
+
+        .navbar .menu-btn[aria-expanded="true"]{
+            color:#211c2d;
+            background:linear-gradient(135deg,#f1d994,#b9e4d0);
+            border-color:#fff0c7;
+            transform:rotate(90deg);
+        }
+
+        .navbar .menu{
+            background:
+                radial-gradient(ellipse at 100% 0%,rgba(255,207,145,0.3),transparent 43%),
+                radial-gradient(ellipse at 0% 100%,rgba(121,223,194,0.25),transparent 48%),
+                linear-gradient(135deg,#3d3450,#253f42 53%,#514035);
+            border-color:rgba(244,226,197,0.48);
+            box-shadow:0 25px 60px rgba(0,0,0,0.56),inset 0 1px rgba(255,255,255,0.2),0 0 35px rgba(123,105,169,0.12);
+        }
+
+        @media(max-width:560px){
+            .navbar .logo{
+                min-height:40px;
+                padding:0 11px;
+                font-size:16px;
+            }
+
+            .navbar .menu-btn{
+                flex-basis:44px;
+                width:44px;
+                height:44px;
+            }
+        }
+        .navbar{
+            position:sticky;top:0;z-index:1100;display:flex;align-items:center;gap:12px;
+            min-height:74px;padding:12px max(20px,calc((100% - 1180px) / 2));
+            background:linear-gradient(110deg,rgba(32,31,29,0.98),rgba(43,40,35,0.97) 52%,rgba(31,30,28,0.98));
+            border-bottom:1px solid rgba(202,183,143,0.23);box-shadow:0 12px 34px rgba(0,0,0,0.48),inset 0 1px rgba(255,255,255,0.06);
+            backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+        }
+        .navbar::before{height:2px;background:linear-gradient(90deg,transparent,#8b7959 22%,#d0b982 50%,#8b7959 78%,transparent);opacity:.9;box-shadow:0 0 12px rgba(185,155,99,.18)}
+        .navbar .logo{display:flex;align-items:center;gap:10px;min-height:44px;margin-left:2px;padding:0 15px 0 13px;color:#f3f0e9;background:linear-gradient(100deg,rgba(255,255,255,.07),rgba(255,255,255,.015));border:1px solid rgba(210,192,155,.18);border-radius:999px;font-size:20px;font-weight:bold;letter-spacing:.6px}
+        .navbar .logo::before{display:grid;width:27px;height:27px;place-items:center;color:#29251d;background:linear-gradient(145deg,#d4c296,#9e8c68);border-radius:9px;content:"✦";font-size:15px;box-shadow:0 4px 13px rgba(0,0,0,.24)}
+        .navbar .menu-btn{display:grid;flex:0 0 46px;width:46px;height:46px;place-items:center;padding:0;color:#eeeae1;background:linear-gradient(145deg,#49453d,#292824);border:1px solid rgba(211,195,160,.35);border-radius:14px;box-shadow:0 6px 17px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.1);font-size:25px;cursor:pointer;transition:transform .2s,background .2s,border-color .2s}
+        .navbar .menu-btn:hover{transform:translateY(-2px);background:linear-gradient(145deg,#5a554b,#35322d);border-color:#c4ad7c}
+        .navbar .menu-btn[aria-expanded="true"]{color:#211f1a;background:linear-gradient(135deg,#d5c49b,#b9aa86);border-color:#e5d6b3;transform:rotate(90deg)}
+        .navbar .menu{display:none;position:absolute;top:calc(100% + 10px);left:max(12px,calc((100% - 1180px) / 2));grid-template-columns:minmax(0,1.1fr) minmax(205px,.9fr);gap:13px;width:min(660px,calc(100vw - 28px));max-height:calc(100vh - 100px);padding:14px;overflow-y:auto;background:radial-gradient(ellipse at 100% 0%,rgba(162,136,89,.2),transparent 43%),radial-gradient(ellipse at 0% 100%,rgba(119,112,91,.16),transparent 48%),linear-gradient(135deg,#302e29,#252521 53%,#38332b);border:1px solid rgba(207,187,145,.32);border-radius:20px;box-shadow:0 24px 58px rgba(0,0,0,.62),inset 0 1px rgba(255,255,255,.09);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+        .menu-enlaces{display:grid;align-content:start;gap:5px;min-width:0}
+        .navbar .menu-enlaces a{display:flex;align-items:center;padding:12px 13px;color:#e9e6df;background:rgba(15,15,14,.36);border:1px solid rgba(255,255,255,.065);border-radius:11px;line-height:1.35;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+        .navbar .menu-enlaces a:hover{transform:translateX(3px);color:#fff;background:rgba(189,169,126,.15);border-color:rgba(208,188,145,.32)}
+        .navbar .menu-enlaces a[aria-current="page"]{color:#f1dfb9;background:rgba(190,163,111,.14);border-color:rgba(209,181,128,.3);box-shadow:inset 3px 0 #b69a64}
+        .menu-motivacion{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:20px;color:#f4f0e6;background:radial-gradient(circle at 90% 10%,rgba(190,159,104,.16),transparent 38%),linear-gradient(155deg,rgba(94,82,59,.45),rgba(50,50,44,.72) 55%,rgba(67,58,45,.72));border:1px solid rgba(212,192,152,.22);border-radius:16px;box-shadow:inset 0 1px rgba(255,255,255,.08)}
+        .menu-motivacion-etiqueta{display:flex;align-items:center;gap:8px;margin-bottom:13px;color:#d7c49a;font-size:11px;font-weight:bold;letter-spacing:1.3px}
+        .menu-motivacion-etiqueta::before{width:7px;height:7px;background:#c6ad77;border-radius:50%;content:"";box-shadow:0 0 10px rgba(198,173,119,.45)}
+        .menu-motivacion p{margin:0;color:#fff;font-size:clamp(18px,2.1vw,23px);font-weight:bold;line-height:1.42;text-wrap:balance}
+        .menu-motivacion-firma{margin-top:17px;color:rgba(239,233,218,.68);font-size:12px;line-height:1.45}
+        @media(max-width:620px){.navbar{padding-right:14px;padding-left:14px}.navbar .logo{min-height:40px;padding:0 11px;font-size:16px}.navbar .menu-btn{flex-basis:44px;width:44px;height:44px}.navbar .menu{left:12px;width:calc(100% - 24px);grid-template-columns:minmax(0,1fr);gap:10px;padding:11px;border-radius:17px}.menu-motivacion{min-height:112px;padding:15px 17px}.menu-motivacion p{font-size:18px}}
+    </style>
+    <link rel="stylesheet" href="../css/tema.css">
+
+</head>
+
+<body data-tema="inicio">
+
+    <div class="navbar">
+
+    <button class="menu-btn" type="button" aria-label="Abrir menú de navegación" aria-controls="menu" aria-expanded="false" onclick="toggleMenu()">☰</button>
+
+    <div class="logo">Construye tu desarrollo personal</div>
+
+        <div class="menu" id="menu">
+
+            <div class="menu-enlaces">
+            <a href="proyecto.html">🏠 Inicio</a>
+
+            <a href="habitos.html">📚 Hábitos</a>
+
+            <a href="juego.html">🎮 Aprende Jugando</a>
+
+            <a href="desafia%20tu%20conocimiento.html">🧩 Desafía tu conocimiento</a>
+
+            <a href="toma de decisiones.html">🌱 Toma de decisiones</a>
+
+            <a href="autonomia.html">🧠 Autonomía</a>
+
+            <a href="responsabilidad.html">🤝 Responsabilidad</a>
+
+            </div>
+            <aside class="menu-motivacion" aria-label="Mensaje motivador">
+                <span class="menu-motivacion-etiqueta">UN PASO A LA VEZ</span>
+                <p id="frase-motivadora" aria-live="polite"></p>
+                <span class="menu-motivacion-firma">Sigue creciendo a tu ritmo ✨</span>
+            </aside>
+        </div>
+
+    </div>
+
+    <div class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-text">
+                <img
+                    class="hero-estudiante-fondo"
+                    src="https://images.pexels.com/photos/6550166/pexels-photo-6550166.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=700&amp;h=1050&amp;fit=crop"
+                    alt=""
+                    aria-hidden="true"
+                    loading="eager"
+                    decoding="async">
+                <h1>
+                    Construye tu <span>desarrollo personal</span>
+                </h1>
+
+                <p>
+                    Cada día trae nuevos retos. Explora tus hábitos, toma decisiones,
+                    pide apoyo cuando lo necesitas y avanza hacia tus metas paso a paso.
+                </p>
+                <div class="hero-acciones">
+                    <a class="hero-cta hero-cta-principal" href="juego.html#titulo-reto">
+                        Descubre tu primera misión <span aria-hidden="true">→</span>
+                    </a>
+                    <a class="hero-cta hero-cta-secundario" href="#titulo-habilidades">
+                        Explorar la página
+                    </a>
+                </div>
+                <div class="habito-pasajero" id="habito-pasajero" aria-hidden="true">
+                    <div class="habito-dialogo">
+                        <span aria-hidden="true">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 5.5h14v10H11l-4.5 3v-3H5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                <path d="M8 9h8M8 12h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <p id="dialogo-habito"></p>
+                    </div>
+                    <svg class="habito-corredor" viewBox="0 0 84 104" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="43" cy="98" rx="22" ry="3" fill="#07111b" opacity=".34"/>
+                        <g class="corredor-pierna corredor-pierna-trasera">
+                            <path d="m39 65-7 14" fill="none" stroke="#344054" stroke-width="7" stroke-linecap="round"/>
+                            <g class="corredor-pantorrilla corredor-pantorrilla-trasera">
+                                <path d="m32 79 1 11" fill="none" stroke="#344054" stroke-width="6" stroke-linecap="round"/>
+                                <path d="m33 89-9 3 1.5 3 11-1 2-2z" fill="#dce4e9" stroke="#344054" stroke-width="1.2" stroke-linejoin="round"/>
+                            </g>
+                        </g>
+                        <g class="corredor-pierna corredor-pierna-delantera">
+                            <path d="m48 65 7 14" fill="none" stroke="#46546a" stroke-width="7" stroke-linecap="round"/>
+                            <g class="corredor-pantorrilla corredor-pantorrilla-delantera">
+                                <path d="m55 79-2 11" fill="none" stroke="#46546a" stroke-width="6" stroke-linecap="round"/>
+                                <path d="m53 89 9 2 4-2-9-4-4 1z" fill="#dce4e9" stroke="#344054" stroke-width="1.2" stroke-linejoin="round"/>
+                            </g>
+                        </g>
+                        <path d="m27 48-5 3 2 22 7 1 3-23z" fill="#5d5675"/>
+                        <g class="corredor-cuerpo">
+                            <path d="m32 40 17-1 9 28-26 4-7-22z" fill="#438b83" stroke="#315f60" stroke-width="1.2" stroke-linejoin="round"/>
+                            <path d="m39 41 2 27" fill="none" stroke="#c0dfd5" stroke-width="1" opacity=".65"/>
+                            <path d="m33 52 5 1" fill="none" stroke="#c0dfd5" stroke-width="1" opacity=".7"/>
+                            <g class="corredor-brazo corredor-brazo-trasero">
+                                <path d="m29 46-8 11-6 7" fill="none" stroke="#46546a" stroke-width="5.5" stroke-linecap="round"/>
+                                <path d="m15 63-3 4" fill="none" stroke="#c58e72" stroke-width="4.2" stroke-linecap="round"/>
+                            </g>
+                            <g class="corredor-brazo corredor-brazo-delantero">
+                                <path d="m50 46 8 9 8-4" fill="none" stroke="#438b83" stroke-width="5.5" stroke-linecap="round"/>
+                                <path d="m66 51 4-4" fill="none" stroke="#c58e72" stroke-width="4.2" stroke-linecap="round"/>
+                            </g>
+                        </g>
+                        <path d="m38 38 9 1 1 5-10 1z" fill="#bd886e"/>
+                        <circle cx="42" cy="25" r="13.5" fill="#c99072"/>
+                        <path d="M28.5 26c-.5-10 5-17 13-17 8.5 0 13.5 5.5 13 14l-4-4-9 1-5-3-5 10z" fill="#302d35"/>
+                        <path d="m31 15 7-5 10 1 5 5" fill="none" stroke="#51434a" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="38" cy="26" r="1.1" fill="#302d35"/>
+                        <circle cx="47" cy="26" r="1.1" fill="#302d35"/>
+                        <path d="m40 33 4 1" fill="none" stroke="#875d52" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+            <section class="aprendizaje-personaje" aria-label="Tu compañero de aprendizaje">
+                <span class="personaje-destello personaje-destello-uno" aria-hidden="true">✦</span>
+                <span class="personaje-destello personaje-destello-dos" aria-hidden="true">✧</span>
+                <span class="personaje-icono personaje-icono-libro" aria-hidden="true">📚</span>
+                <span class="personaje-icono personaje-icono-idea" aria-hidden="true">💡</span>
+                <div class="personaje-escena">
+                    <span class="personaje-insignia">TU COMPAÑERO DE AVENTURA</span>
+                    <button class="estudiante-personaje" type="button" onclick="nuevoDialogoAprendizaje()" aria-label="Hablar con el estudiante">
+                        <svg viewBox="0 0 420 340" role="img" aria-labelledby="titulo-estudiante descripcion-estudiante" xmlns="http://www.w3.org/2000/svg">
+                            <title id="titulo-estudiante">Estudiante con ganas de aprender</title>
+                            <desc id="descripcion-estudiante">Un niño sonriente, sentado frente a un libro abierto con un lápiz y una bombilla de ideas.</desc>
+                            <defs>
+                                <linearGradient id="fondo-estudiante" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0" stop-color="#31265a"/>
+                                    <stop offset="1" stop-color="#123f46"/>
+                                </linearGradient>
+                                <linearGradient id="libro-estudiante" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0" stop-color="#fff8d8"/>
+                                    <stop offset="1" stop-color="#dceee8"/>
+                                </linearGradient>
+                            </defs>
+                            <rect x="13" y="12" width="394" height="316" rx="34" fill="url(#fondo-estudiante)"/>
+                            <circle cx="210" cy="164" r="119" fill="#a78bfa" opacity=".12"/>
+                            <path d="M39 262c52-28 95-31 139-17s93 15 203-23v76H39z" fill="#2dd4bf" opacity=".14"/>
+                            <path d="m78 61 5 11 12 1-9 8 3 11-11-6-10 6 2-11-9-8 12-1z" fill="#fde68a"/>
+                            <path d="m335 73 4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z" fill="#5eead4"/>
+                            <circle cx="105" cy="137" r="4" fill="#fde68a"/>
+                            <circle cx="321" cy="161" r="4" fill="#c4b5fd"/>
+                            <g class="estudiante-bombilla">
+                                <circle cx="308" cy="109" r="34" fill="#fde68a" opacity=".13"/>
+                                <path d="M293 106a15 15 0 1 1 29 6c-3 4-6 7-6 12h-17c0-5-3-8-6-12a15 15 0 0 1 0-6Z" fill="#fde68a"/>
+                                <path d="M301 128h13m-11 5h9" stroke="#f6c95c" stroke-width="4" stroke-linecap="round"/>
+                                <path d="M308 82V74m-25 16-6-6m55 6 6-6" stroke="#fde68a" stroke-width="3" stroke-linecap="round"/>
+                            </g>
+                            <path d="M115 278c9-47 43-72 95-72s86 25 95 72v30H115z" fill="#8b6de0"/>
+                            <path d="M177 205c2 23 14 38 33 38s31-15 33-38l-12-14h-42z" fill="#d99873"/>
+                            <path d="M163 151c0-40 19-63 47-63s47 23 47 63v34c0 29-21 49-47 49s-47-20-47-49z" fill="#d99873"/>
+                            <path d="M162 153c-10-43 6-75 40-79 34-5 57 16 56 51l-12-8-14-20c-14 17-37 25-67 24l-3 33z" fill="#362746"/>
+                            <path d="M178 158c4-4 10-4 14 0m24 0c4-4 10-4 14 0" fill="none" stroke="#382d37" stroke-width="4" stroke-linecap="round"/>
+                            <circle cx="185" cy="164" r="3" fill="#382d37"/>
+                            <circle cx="223" cy="164" r="3" fill="#382d37"/>
+                            <path d="M191 185q14 13 28 0" fill="none" stroke="#9e4e55" stroke-width="4" stroke-linecap="round"/>
+                            <circle cx="174" cy="179" r="7" fill="#f08b83" opacity=".28"/>
+                            <circle cx="235" cy="179" r="7" fill="#f08b83" opacity=".28"/>
+                            <path d="M127 278c22-24 51-36 83-36s61 12 83 36" fill="none" stroke="#5eead4" stroke-width="5"/>
+                            <path d="M92 286h236l-14 34H106z" fill="#8b6de0"/>
+                            <path d="M132 268q38-21 78 0v30q-40-21-78 0zm78 0q40-21 78 0v30q-40-21-78 0z" fill="url(#libro-estudiante)" stroke="#c4b5fd" stroke-width="2"/>
+                            <path d="M146 279h45m-45 8h38m39-8h43m-43 8h36" stroke="#70b8ad" stroke-width="3" stroke-linecap="round"/>
+                            <path d="m294 251 5-23" stroke="#fde68a" stroke-width="8" stroke-linecap="round"/>
+                            <path d="m295 228 7-11 2 14z" fill="#e98063"/>
+                            <text x="210" y="316" fill="#e9ddff" font-family="Arial,sans-serif" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="1">CURIOSIDAD · IDEAS · DESCUBRIMIENTOS</text>
+                        </svg>
+                    </button>
+                    <div class="personaje-dialogo" aria-live="polite" aria-atomic="true">
+                        <span class="personaje-dialogo-icono" aria-hidden="true">💬</span>
+                        <p id="dialogo-aprendizaje">¡Es hora de aprender!</p>
+                    </div>
+                    <button class="personaje-boton" type="button" onclick="nuevoDialogoAprendizaje()">
+                        Hablar conmigo <span aria-hidden="true">↗</span>
+                    </button>
+                    <span class="personaje-ayuda">Haz clic en el estudiante para conversar</span>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+    <section class="inicio-aprendizaje" aria-label="Empieza a aprender">
+        <aside class="hero-guia" aria-label="Cómo empezar tu desarrollo personal">
+            <span class="hero-guia-etiqueta">TU CAMINO, A TU RITMO</span>
+            <h2>Cada habilidad se fortalece practicando</h2>
+            <p>No necesitas cambiar todo de una vez. Elige un área y da un primer paso pequeño.</p>
+            <ul class="hero-guia-lista">
+                <li><span>01</span><div><strong>Conócete</strong><small>Identifica lo que te importa y lo que quieres aprender.</small></div></li>
+                <li><span>02</span><div><strong>Prueba una estrategia</strong><small>Practica con una acción concreta en tu día.</small></div></li>
+                <li><span>03</span><div><strong>Reconoce tu avance</strong><small>Reflexiona y ajusta el siguiente paso.</small></div></li>
+            </ul>
+            <a class="hero-guia-link" href="#titulo-habilidades">Explorar habilidades <span aria-hidden="true">→</span></a>
+        </aside>
+        <div class="hero-media video-bajo video-bajo-horizontal">
+            <video class="hero-video" controls preload="metadata" playsinline aria-label="Video de desarrollo personal">
+                <source src="../mp4/desarrollo personal.mp4" type="video/mp4">
+                Tu navegador no puede reproducir el video de desarrollo personal.
+            </video>
+            <p class="hero-video-explanation">
+                Fortalecer el desarrollo personal te ayuda a conocerte, confiar en tus capacidades y tomar decisiones más conscientes. Así puedes construir relaciones saludables y avanzar hacia tus metas paso a paso.
+            </p>
+        </div>
+    </section>
+
+    <section class="explora" aria-label="Explora y practica habilidades">
+    <div class="info">
+
+        <h2>¿Qué puedes hacer?</h2>
+        <p class="info-intro">
+            Elige una misión, prueba algo nuevo y descubre habilidades que te servirán en clase y en tu día a día.
+        </p>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <span class="card-icono" aria-hidden="true">💡</span>
+                <h3>Presentación</h3>
+
+                <p>
+                    Descubre ideas para conocerte mejor y empezar a crecer a tu manera.
+                </p>
+                <a class="card-link" href="#titulo-habilidades">Ver las habilidades</a>
+
+            </div>
+
+            <div class="card">
+
+                <span class="card-icono" aria-hidden="true">🎮</span>
+                <h3>Juego</h3>
+
+                <p>
+                    Aprende de forma divertida con actividades interactivas.
+                </p>
+                <a class="card-link" href="juego.html">Ir a jugar</a>
+
+            </div>
+
+            <div class="card">
+
+                <span class="card-icono" aria-hidden="true">🚀</span>
+                <h3>Contenido</h3>
+
+                <p>
+                    Elige una idea sencilla y empieza a practicarla hoy mismo.
+                </p>
+                <a class="card-link" href="habitos.html">Elegir un hábito</a>
+
+            </div>
+
+        </div>
+
+        <div class="reto">
+            <div class="reto-texto">
+                <strong>⚡ Mini reto de hoy</strong>
+                <p id="reto-diario" aria-live="polite">Piensa en algo que quieras mejorar y da un primer paso de 5 minutos.</p>
+            </div>
+            <button type="button" onclick="nuevoReto()">Dame otro reto ↻</button>
+        </div>
+
+    </div>
+
+    <section class="habilidades" aria-labelledby="titulo-habilidades">
+        <div class="habilidades-contenido">
+            <div class="habilidades-texto">
+                <span class="etiqueta">TU CRECIMIENTO, PASO A PASO</span>
+                <h2 id="titulo-habilidades">Cuatro habilidades para construir tu camino</h2>
+                <p class="habilidades-intro">
+                    Aprender estas habilidades te ayuda a conocerte, organizarte y avanzar
+                    con confianza. No tienes que dominarlas de un día para otro: practícalas
+                    poco a poco y verás cómo cada pequeño esfuerzo suma. Toca cada tarjeta
+                    para descubrir una idea y conocer más.
+                </p>
+
+                <div class="habilidades-lista">
+                    <details class="habilidad">
+                        <summary><span class="habilidad-icono" aria-hidden="true">📚</span>Hábitos</summary>
+                        <p>Son acciones que repites y que, con el tiempo, te acercan a tus metas. Empieza con algo pequeño y conviértelo en parte de tu día.</p>
+                        <a href="habitos.html">Explorar hábitos →</a>
+                    </details>
+
+                    <details class="habilidad">
+                        <summary><span class="habilidad-icono" aria-hidden="true">🧠</span>Autonomía</summary>
+                        <p>Te ayuda a hacer cosas por ti mismo, pedir apoyo cuando lo necesitas y hacerte responsable de tus decisiones.</p>
+                        <a href="autonomia.html">Explorar autonomía →</a>
+                    </details>
+
+                    <details class="habilidad">
+                        <summary><span class="habilidad-icono" aria-hidden="true">🌱</span>Toma de decisiones</summary>
+                        <p>Consiste en pensar en tus opciones y sus consecuencias antes de elegir lo que mejor se adapta a tus valores y objetivos.</p>
+                        <a href="toma de decisiones.html">Explorar decisiones →</a>
+                    </details>
+
+                    <details class="habilidad">
+                        <summary><span class="habilidad-icono" aria-hidden="true">🤝</span>Responsabilidad</summary>
+                        <p>Es cumplir acuerdos posibles, hacerte cargo de tus acciones, avisar cuando necesitas apoyo y buscar cómo reparar si algo sale mal.</p>
+                        <a href="responsabilidad.html">Explorar responsabilidad →</a>
+                    </details>
+                </div>
+            </div>
+
+            <figure class="pensando">
+                <span class="decor decor-uno" aria-hidden="true"></span>
+                <span class="decor decor-dos" aria-hidden="true"></span>
+                <span class="decor decor-tres" aria-hidden="true"></span>
+                <svg class="ilustracion-persona" viewBox="0 0 420 390" role="img" aria-labelledby="titulo-ilustracion descripcion-ilustracion" xmlns="http://www.w3.org/2000/svg">
+                    <title id="titulo-ilustracion">Niño pensando en sus metas</title>
+                    <desc id="descripcion-ilustracion">Ilustración de un niño sonriente con la mano en la barbilla y una bombilla de ideas sobre su cabeza.</desc>
+
+                    <defs>
+                        <linearGradient id="piel" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" stop-color="#ffd1a9"/>
+                            <stop offset="1" stop-color="#e99b78"/>
+                        </linearGradient>
+                        <linearGradient id="sudadera" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" stop-color="#d0d0d0"/>
+                            <stop offset="1" stop-color="#666666"/>
+                        </linearGradient>
+                        <linearGradient id="pelo" x1="0" y1="0" x2="0.8" y2="1">
+                            <stop offset="0" stop-color="#59404a"/>
+                            <stop offset="1" stop-color="#30232c"/>
+                        </linearGradient>
+                        <radialGradient id="brilloBombilla">
+                            <stop offset="0" stop-color="#fff5c7" stop-opacity="0.75"/>
+                            <stop offset="1" stop-color="#fff5c7" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+
+                    <circle cx="331" cy="74" r="83" fill="url(#brilloBombilla)"/>
+                    <g class="burbuja-idea">
+                        <path d="M275 56c0-31 25-56 56-56s56 25 56 56c0 19-9 35-24 46-7 5-11 13-11 21h-43c0-8-4-16-11-21-14-11-23-27-23-46Z" fill="#f8d778" stroke="#fff0aa" stroke-width="3"/>
+                        <path d="M309 127h44v12h-44zM315 145h32v10h-32z" fill="#d99c51"/>
+                        <path d="M331 18v13M292 35l10 9M370 35l-10 9M282 76l-11 4M380 76l11 4" stroke="#fff1ad" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M316 71c5 6 10 6 15 0s10-6 15 0" fill="none" stroke="#d18b3f" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="253" cy="111" r="7" fill="#e2e2e2"/>
+                        <circle cx="238" cy="133" r="4" fill="#bdbdbd"/>
+                    </g>
+
+                    <path d="M81 390c9-71 57-111 130-111s120 40 129 111H81Z" fill="url(#sudadera)"/>
+                    <path d="M163 277c5 29 22 47 48 47s43-18 48-47l-17-19h-62l-17 19Z" fill="url(#piel)"/>
+                    <path d="M158 194c0-55 24-85 56-85s56 30 56 85v34c0 38-25 65-56 65s-56-27-56-65v-34Z" fill="url(#piel)"/>
+                    <path d="M157 196c-16-57 5-103 54-111 40-7 69 16 75 55 2 12 0 28-5 42-6-24-18-37-34-43-17 20-48 31-88 29l-2 28Z" fill="url(#pelo)"/>
+                    <path d="M159 191c-14-7-22 1-20 17 2 15 10 25 21 23M270 191c14-7 22 1 20 17-2 15-10 25-21 23" fill="url(#piel)"/>
+                    <path d="M178 199c5-5 12-5 17 0M230 199c5-5 12-5 17 0" fill="none" stroke="#422e32" stroke-width="5" stroke-linecap="round"/>
+                    <circle cx="188" cy="207" r="3.5" fill="#35272b"/>
+                    <circle cx="240" cy="207" r="3.5" fill="#35272b"/>
+                    <circle cx="175" cy="224" r="8" fill="#e9837e" opacity="0.2"/>
+                    <circle cx="258" cy="224" r="8" fill="#e9837e" opacity="0.2"/>
+                    <circle cx="189" cy="206" r="1.1" fill="#fff"/>
+                    <circle cx="241" cy="206" r="1.1" fill="#fff"/>
+                    <path d="M207 211c-2 9-4 14-1 17 2 2 5 2 8 1" fill="none" stroke="#ce8d70" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M192 237c10 10 24 10 35 0" fill="none" stroke="#9a4f55" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M180 224c-9-8-21-2-22 9-1 13 11 20 24 16l15-8-2-11-15-6Z" fill="url(#piel)" stroke="#df9c79" stroke-width="2"/>
+                    <path d="M185 267c8 10 19 15 29 15 11 0 22-5 30-15" fill="none" stroke="#d98e70" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M173 307c19 13 46 18 77 0l27 83H128l45-83Z" fill="url(#sudadera)"/>
+                    <path d="m139 324 48 21M281 324l-47 21" stroke="#f0f0f0" stroke-width="7" stroke-linecap="round"/>
+                    <path d="m203 323 9 14 9-14" fill="none" stroke="#555" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M189 286c7 8 14 12 21 12s15-4 22-12" fill="none" stroke="#cf8b70" stroke-width="3"/>
+                    <path d="M111 166h22M122 155v22M305 202h18M314 193v18" stroke="#e5e5e5" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+                <figcaption class="pensando-pie">Cada gran idea empieza con una pregunta 💡</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    </section>
+
+    <section class="biblioteca" aria-labelledby="titulo-biblioteca">
+        <div class="biblioteca-cabecera">
+            <span class="biblioteca-etiqueta">LECTURAS PARA CRECER</span>
+            <h2 id="titulo-biblioteca">Un libro, una idea, un nuevo paso</h2>
+            <p>Explora lecturas relacionadas con cada habilidad. No tienes que leerlas todas: elige una que te interese y conversa sobre sus ideas con alguien de confianza.</p>
+        </div>
+
+        <div class="biblioteca-contenido">
+            <figure class="biblioteca-foto">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Boy_comfortably_reading_a_book.jpg/960px-Boy_comfortably_reading_a_book.jpg"
+                     alt="Niño leyendo tranquilamente un libro"
+                     loading="lazy"
+                     decoding="async">
+                <figcaption>
+                    <strong>Un momento para leer</strong>
+                    Descubre ideas nuevas y encuentra inspiración en cada página.
+                </figcaption>
+            </figure>
+
+            <div class="lecturas-grid">
+            <article class="lectura-card">
+                <h3>📚 Hábitos</h3>
+                <ul>
+                    <li><strong>Hábitos atómicos — James Clear.</strong> Ideas para empezar con cambios pequeños y preparar el entorno para repetirlos.</li>
+                    <li><strong>Los 7 hábitos de los adolescentes altamente efectivos — Sean Covey.</strong> Actividades para jóvenes sobre prioridades, metas y hábitos.</li>
+                </ul>
+                <p>Prueba una idea sencilla y observa durante una semana si te ayuda a mantener tu rutina.</p>
+            </article>
+
+            <article class="lectura-card">
+                <div class="lectura-arte">
+                    <svg viewBox="0 0 180 130" role="img" aria-label="Ilustración original de una lista organizada y una marca de verificación">
+                        <rect x="47" y="17" width="87" height="100" rx="12" fill="#333" stroke="#eee" stroke-width="3"/>
+                        <rect x="69" y="11" width="42" height="15" rx="7" fill="#888" stroke="#eee" stroke-width="2"/>
+                        <path d="m61 47 5 5 9-11M85 47h35M61 69l5 5 9-11M85 69h35M61 91l5 5 9-11M85 91h23" fill="none" stroke="#eee" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="139" cy="91" r="19" fill="#777" stroke="#fff" stroke-width="3"/>
+                        <path d="m130 91 6 6 12-14" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M37 33h-8M37 57h-8M37 81h-8" stroke="#aaa" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3>✅ Responsabilidad</h3>
+                <ul>
+                    <li><strong>Los 7 hábitos de los adolescentes altamente efectivos — Sean Covey.</strong> Propone formas de fijar prioridades, cumplir compromisos y organizarse.</li>
+                    <li><strong>El hombre más rico de Babilonia — George S. Clason.</strong> Relatos sobre planificación y manejo del dinero; conviene conversar sus ideas con una persona adulta.</li>
+                </ul>
+                <p>Al leer, piensa en un compromiso pequeño que puedas cumplir y en cómo recordar hacerlo.</p>
+            </article>
+
+            <article class="lectura-card">
+                <div class="lectura-arte">
+                    <svg viewBox="0 0 180 130" role="img" aria-label="Ilustración original de una brújula para representar autonomía">
+                        <circle cx="90" cy="66" r="48" fill="#333" stroke="#ddd" stroke-width="4"/>
+                        <circle cx="90" cy="66" r="36" fill="#222" stroke="#888" stroke-width="2"/>
+                        <path d="m90 30 11 36-11 36-11-36 11-36Z" fill="#ddd" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="m90 30 11 36-11-8V30Z" fill="#777"/>
+                        <circle cx="90" cy="66" r="5" fill="#fff"/>
+                        <path d="M90 8v10M90 114v10M32 66h10M138 66h10" stroke="#eee" stroke-width="3" stroke-linecap="round"/>
+                        <path d="m120 21 5-5m-90 95 5-5m85 0 5 5M35 16l5 5" stroke="#888" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3>🧭 Autonomía</h3>
+                <ul>
+                    <li><strong>Mindset: la actitud del éxito — Carol S. Dweck.</strong> Explora cómo aprender de los retos y desarrollar habilidades con práctica y apoyo.</li>
+                    <li><strong>Los 7 hábitos de los adolescentes altamente efectivos — Sean Covey.</strong> Sus ejercicios ayudan a plantear metas y hacerse cargo de las decisiones cotidianas.</li>
+                </ul>
+                <p>Elige una idea que te ayude a intentar algo por tu cuenta y recuerda que pedir apoyo también es parte de aprender.</p>
+            </article>
+
+            <article class="lectura-card">
+                <div class="lectura-arte">
+                    <svg viewBox="0 0 180 130" role="img" aria-label="Ilustración original de caminos que representan opciones para decidir">
+                        <path d="M90 112V81M90 81 52 48M90 81l38-33" fill="none" stroke="#ddd" stroke-width="7" stroke-linecap="round"/>
+                        <path d="M52 48V31M128 48V31" stroke="#ddd" stroke-width="5" stroke-linecap="round"/>
+                        <path d="m44 40 8-12 8 12ZM120 40l8-12 8 12Z" fill="#999" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+                        <circle cx="90" cy="75" r="13" fill="#555" stroke="#fff" stroke-width="3"/>
+                        <path d="m84 75 4 4 8-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M37 107h106" stroke="#777" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 7"/>
+                    </svg>
+                </div>
+                <h3>🌱 Toma de decisiones</h3>
+                <ul>
+                    <li><strong>Decídete — Chip Heath y Dan Heath.</strong> Presenta herramientas para ampliar opciones y revisar supuestos antes de elegir.</li>
+                    <li><strong>Pensar rápido, pensar despacio — Daniel Kahneman.</strong> Explica cómo pensamos al decidir; es una lectura extensa que se puede explorar por partes.</li>
+                </ul>
+                <p>Mientras lees, practica comparando opciones y pensando en sus posibles consecuencias.</p>
+            </article>
+
+            </div>
+        </div>
+
+        <p class="biblioteca-nota"><strong>Recuerda:</strong> son sugerencias, no tareas obligatorias. Algunas ideas pueden necesitar adaptación a tu edad; puedes pedir a una persona adulta o docente que te ayude a elegir una lectura.</p>
+    </section>
+
+    <!-- BOTÓN VOLVER ARRIBA -->
+
+    <button class="btn-arriba" onclick="irArriba()">
+        <span class="flecha-arriba"></span>
+    </button>
+
+    <script>
+
+        function toggleMenu() {
+
+            const menu = document.getElementById("menu");
+            const botonMenu = document.querySelector(".menu-btn");
+            const abrir = menu.style.display !== "grid";
+
+            menu.style.display = abrir ? "grid" : "none";
+            botonMenu.setAttribute("aria-expanded", String(abrir));
+            botonMenu.setAttribute(
+                "aria-label",
+                abrir ? "Cerrar menú de navegación" : "Abrir menú de navegación"
+            );
+
+        }
+
+        function irArriba() {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+        let indiceDialogoAprendizaje = -1;
+
+        function nuevoDialogoAprendizaje() {
+
+            const dialogos = [
+                "¿Qué te gustaría descubrir hoy?",
+                "Cada pregunta es el comienzo de una gran idea.",
+                "¡Un pequeño paso también cuenta como progreso!",
+                "Si algo cuesta, podemos intentarlo de otra manera.",
+                "Aprender es una aventura: ¿qué exploramos primero?"
+            ];
+
+            indiceDialogoAprendizaje = (indiceDialogoAprendizaje + 1) % dialogos.length;
+            document.getElementById("dialogo-aprendizaje").textContent = dialogos[indiceDialogoAprendizaje];
+
+        }
+
+        function nuevoReto() {
+
+            const retos = [
+                "Prepara tu mochila o espacio de estudio antes de que te lo recuerden.",
+                "Elige una tarea pendiente y avanza en ella durante solo 5 minutos.",
+                "Antes de decidir algo hoy, anota una opción y una posible consecuencia.",
+                "Cumple una pequeña promesa que te hayas hecho esta semana.",
+                "Ayuda a alguien con una tarea y observa cómo se siente colaborar.",
+                "Aparta el celular por 15 minutos y concéntrate en una sola actividad."
+            ];
+            const indice = Math.floor(Math.random() * retos.length);
+            document.getElementById("reto-diario").textContent = retos[indice];
+
+        }
+
+        (function iniciarConsejitosDeEstudio() {
+
+            const personaje = document.getElementById("habito-pasajero");
+            const dialogo = document.getElementById("dialogo-habito");
+            if (!personaje || !dialogo) return;
+
+            const frases = [
+                "¿Una partida más y se hizo tarde? Mañana también necesitas descansar.",
+                "¿Dejaste la tarea para el final? Prueba empezar con solo cinco minutos.",
+                "¿El celular te distrae al estudiar? Déjalo en silencio un ratito.",
+                "¿Saltaste el desayuno por salir corriendo? Preparar algo desde antes puede ayudar.",
+                "¿Tienes mil pestañas abiertas? Elige una tarea y ve paso a paso.",
+                "¿Estudiaste toda la noche? Dormir también ayuda a recordar lo aprendido.",
+                "¿Olvidaste anotar la tarea? Apúntala ahora y te será más fácil organizarte.",
+                "¿Dijiste «luego lo hago»? El primer paso puede tomar menos de cinco minutos.",
+                "¿Te comparas con los demás? Cada persona aprende a su propio ritmo.",
+                "¿Te frustraste con un error? Revisarlo es otra forma de aprender.",
+                "¿Estás haciendo todo a la vez? Una pausa breve también cuenta.",
+                "¿Se te olvidó preparar la mochila? Revisarla hoy te quita apuros mañana.",
+                "¿Te cuesta concentrarte? Prueba estudiar un ratito y luego descansar.",
+                "¿Esperas a tener ganas para empezar? A veces las ganas llegan después del primer paso."
+            ];
+
+            const preferenciasMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)");
+            if (preferenciasMovimiento.matches) {
+                dialogo.textContent = "Un consejo: organiza tus tareas en pasos pequeños y date tiempo para descansar.";
+                personaje.classList.add("movimiento-reducido");
+                return;
+            }
+
+            const recorridos = [
+                { personajeAbajo: 28, dialogoAbajo: 110, dialogoX: "38%" },
+                { personajeAbajo: 48, dialogoAbajo: 130, dialogoX: "62%" },
+                { personajeAbajo: 68, dialogoAbajo: 150, dialogoX: "43%" },
+                { personajeAbajo: 88, dialogoAbajo: 170, dialogoX: "58%" }
+            ];
+            let frasesPendientes = [];
+            let recorridoAnterior = -1;
+            const obtenerFrase = () => {
+                if (frasesPendientes.length === 0) {
+                    frasesPendientes = frases.slice();
+                    for (let indice = frasesPendientes.length - 1; indice > 0; indice--) {
+                        const aleatorio = Math.floor(Math.random() * (indice + 1));
+                        [frasesPendientes[indice], frasesPendientes[aleatorio]] =
+                            [frasesPendientes[aleatorio], frasesPendientes[indice]];
+                    }
+                }
+                return frasesPendientes.pop();
+            };
+
+            const obtenerRecorrido = () => {
+                let indice = Math.floor(Math.random() * recorridos.length);
+                if (recorridos.length > 1 && indice === recorridoAnterior) {
+                    indice = (indice + 1 + Math.floor(Math.random() * (recorridos.length - 1))) % recorridos.length;
+                }
+                recorridoAnterior = indice;
+                return recorridos[indice];
+            };
+
+            const mostrarSiguienteConsejo = () => {
+                const recorrido = obtenerRecorrido();
+                personaje.style.setProperty("--personaje-abajo", `${recorrido.personajeAbajo}px`);
+                personaje.style.setProperty("--dialogo-abajo", `${recorrido.dialogoAbajo}px`);
+                personaje.style.setProperty("--dialogo-x", recorrido.dialogoX);
+                dialogo.textContent = obtenerFrase();
+                personaje.classList.remove("activo");
+                personaje.classList.toggle("desde-derecha", Math.random() < 0.5);
+                void personaje.offsetWidth;
+                personaje.classList.add("activo");
+
+                window.setTimeout(() => {
+                    personaje.classList.remove("activo");
+                    window.setTimeout(mostrarSiguienteConsejo, 7000);
+                }, 20000);
+            };
+
+            window.setTimeout(mostrarSiguienteConsejo, 2200);
+
+        })();
+
+    </script>
+
+    <script>
+        (function(){
+            const frases = [
+                "Cada pequeño paso también cuenta.",
+                "No necesitas hacerlo perfecto; solo seguir intentándolo.",
+                "Lo que practicas hoy puede convertirse en tu fortaleza de mañana.",
+                "Equivocarte es parte de descubrir cómo hacerlo mejor.",
+                "Confía en lo que puedes aprender, paso a paso.",
+                "Tu esfuerzo de hoy está construyendo algo importante.",
+                "Cuando avanzas a tu ritmo, cada logro es tuyo.",
+                "Una buena decisión empieza por darte tiempo para pensar.",
+                "Pedir apoyo también es una forma valiente de avanzar.",
+                "Hoy puedes empezar de nuevo con una idea y un paso."
+            ];
+            const clave = "frase-motivadora-anterior";
+            const guardada = window.sessionStorage.getItem(clave);
+            const anterior = guardada === null ? -1 : Number(guardada);
+            const indice = Number.isInteger(anterior) && anterior >= 0 && anterior < frases.length
+                ? (anterior + 1 + Math.floor(Math.random() * (frases.length - 1))) % frases.length
+                : Math.floor(Math.random() * frases.length);
+            const elemento = document.getElementById("frase-motivadora");
+
+            window.sessionStorage.setItem(clave, String(indice));
+            if(elemento) elemento.textContent = frases[indice];
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111111">
+    <title>Responsabilidad | Construye habilidades</title>
+    <style>
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+            scroll-behavior:smooth;
+        }
+
+        body{
+            min-height:100vh;
+            overflow-x:hidden;
+            color:#f5f5f5;
+            background:#333;
+            font-family:Arial,sans-serif;
+        }
+
+        .navbar{
+            position:sticky;
+            top:0;
+            z-index:1100;
+            display:flex;
+            align-items:center;
+            gap:12px;
+            min-height:74px;
+            padding:12px max(20px,calc((100% - 1180px) / 2));
+            background:rgba(15,15,15,0.9);
+            border-bottom:1px solid rgba(255,255,255,0.12);
+            box-shadow:0 12px 35px rgba(0,0,0,0.42);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+        }
+
+        .navbar::before{
+            position:absolute;
+            top:0;
+            right:0;
+            left:0;
+            height:2px;
+            background:linear-gradient(90deg,transparent,#f5f5f5 22%,#777 52%,#eee 78%,transparent);
+            content:"";
+            opacity:0.8;
+            pointer-events:none;
+        }
+
+        .logo{
+            margin-left:4px;
+            color:#fff;
+            font-size:20px;
+            font-weight:bold;
+            letter-spacing:1px;
+            text-shadow:0 2px 16px rgba(255,255,255,0.12);
+        }
+
+        .menu-btn{
+            display:grid;
+            flex:0 0 46px;
+            width:46px;
+            height:46px;
+            place-items:center;
+            padding:0;
+            color:#f5f5f5;
+            background:linear-gradient(145deg,#353535,#1d1d1d);
+            border:1px solid #555;
+            border-radius:14px;
+            font-size:25px;
+            cursor:pointer;
+            transition:transform 0.25s,background 0.25s,border-color 0.25s;
+        }
+
+        .menu-btn:hover{
+            transform:translateY(-2px) rotate(-3deg);
+            background:linear-gradient(145deg,#484848,#252525);
+            border-color:#aaa;
+        }
+
+        .menu{
+            position:absolute;
+            top:calc(100% + 10px);
+            left:max(12px,calc((100% - 1180px) / 2));
+            display:none;
+            width:min(300px,calc(100vw - 28px));
+            padding:12px;
+            background:linear-gradient(145deg,rgba(39,39,39,0.98),rgba(15,15,15,0.98));
+            border:1px solid #555;
+            border-radius:18px;
+            box-shadow:0 20px 50px rgba(0,0,0,0.58);
+            backdrop-filter:blur(16px);
+            -webkit-backdrop-filter:blur(16px);
+        }
+
+        .menu a{
+            display:flex;
+            align-items:center;
+            padding:13px 14px;
+            color:#e6e6e6;
+            border-bottom:1px solid #353535;
+            border-radius:11px;
+            font-weight:bold;
+            text-decoration:none;
+            transition:background 0.2s,color 0.2s,transform 0.2s;
+        }
+
+        .menu a:hover{
+            transform:translateX(4px);
+            color:#fff;
+            background:linear-gradient(100deg,#373737,#242424);
+        }
+
+        .menu a:last-child{border-bottom:0}
+
+        .menu-btn:focus-visible,
+        .menu a:focus-visible,
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible{
+            outline:3px solid #eee;
+            outline-offset:3px;
+        }
+
+        .hero{
+            position:relative;
+            display:grid;
+            width:100%;
+            min-height:540px;
+            grid-template-columns:minmax(0,1fr) minmax(280px,0.82fr);
+            align-items:center;
+            gap:48px;
+            margin:0;
+            padding:68px max(20px,calc((100% - 1200px) / 2)) 78px;
+            background:
+                linear-gradient(110deg,rgba(0,0,0,0.78),rgba(0,0,0,0.48) 55%,rgba(0,0,0,0.72)),
+                url("https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2000&q=85") center / cover;
+        }
+
+        .hero-copy{
+            position:relative;
+            z-index:1;
+            animation:aparecer 0.8s ease both;
+        }
+
+        .hero-etiqueta,
+        .section-etiqueta{
+            display:inline-block;
+            margin-bottom:16px;
+            padding:8px 13px;
+            color:#e8e8e8;
+            background:linear-gradient(120deg,#333,#1b1b1b);
+            border:1px solid #555;
+            border-radius:999px;
+            font-size:13px;
+            font-weight:bold;
+            letter-spacing:1px;
+        }
+
+        h1{
+            margin-bottom:20px;
+            font-size:clamp(46px,6.5vw,76px);
+            line-height:1.03;
+        }
+
+        h1 span{color:#aaa}
+
+        .hero-copy > p{
+            max-width:650px;
+            color:#ddd;
+            font-size:19px;
+            line-height:1.8;
+        }
+
+        .hero-tip{
+            margin-top:22px;
+            padding:15px 17px;
+            color:#e4e4e4;
+            background:rgba(255,255,255,0.055);
+            border-left:3px solid #bbb;
+            border-radius:10px;
+            font-size:15px;
+            line-height:1.65;
+        }
+
+        .hero-media{
+            display:grid;
+            place-items:center;
+            min-width:0;
+            padding:16px;
+            background:
+                radial-gradient(circle at 50% 50%,#3b3b3b,#202020 68%,#151515);
+            border:1px solid #4b4b4b;
+            border-radius:30px;
+            box-shadow:0 22px 60px rgba(0,0,0,0.4);
+        }
+
+        .hero-video{
+            display:block;
+            width:auto;
+            height:min(70vh,520px);
+            max-width:100%;
+            aspect-ratio:9 / 16;
+            border:1px solid #555;
+            border-radius:17px;
+            background:#080808;
+            box-shadow:0 12px 30px rgba(0,0,0,0.38);
+        }
+
+        main{padding-bottom:50px}
+
+        .section{
+            width:min(1160px,calc(100% - 40px));
+            margin:0 auto;
+            padding:64px 0;
+        }
+
+        .section-heading{
+            max-width:760px;
+            margin:0 auto 34px;
+            text-align:center;
+        }
+
+        .section-heading.con-imagen{
+            display:flex;
+            min-height:220px;
+            flex-direction:column;
+            justify-content:center;
+            max-width:none;
+            padding:30px clamp(20px,5vw,56px);
+            overflow:hidden;
+            background-position:center;
+            background-size:cover;
+            border:1px solid #555;
+            border-radius:24px;
+            box-shadow:0 18px 42px rgba(0,0,0,0.3);
+        }
+
+        .section-heading-conceptos{
+            background:linear-gradient(145deg,#292929,#171717);
+        }
+
+        .responsabilidad-imagen-completa{
+            width:min(760px,100%);
+            margin:0 auto 30px;
+            padding:10px;
+            overflow:hidden;
+            background:linear-gradient(145deg,#383838,#1a1a1a);
+            border:1px solid #555;
+            border-radius:22px;
+            box-shadow:0 18px 42px rgba(0,0,0,0.3);
+        }
+
+        .responsabilidad-imagen-completa img{
+            display:block;
+            width:100%;
+            height:auto;
+            border-radius:14px;
+        }
+
+        .responsabilidad-imagen-completa figcaption{
+            padding:12px 8px 4px;
+            color:#ccc;
+            font-size:14px;
+            line-height:1.5;
+            text-align:center;
+        }
+
+        .section-heading-accion{
+            background-image:
+                linear-gradient(100deg,rgba(8,8,8,0.82),rgba(8,8,8,0.45),rgba(8,8,8,0.82)),
+                url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1400&q=85");
+        }
+
+        .section-heading-pasos{
+            background-image:
+                linear-gradient(100deg,rgba(8,8,8,0.82),rgba(8,8,8,0.45),rgba(8,8,8,0.82)),
+                url("https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1400&q=85");
+        }
+
+        .section-heading h2{
+            margin-bottom:12px;
+            font-size:clamp(32px,4.5vw,48px);
+            line-height:1.12;
+        }
+
+        .section-heading.con-imagen h2,
+        .section-heading.con-imagen p{
+            text-shadow:0 2px 14px rgba(0,0,0,0.9);
+        }
+
+        .section-heading h2 span{color:#aaa}
+
+        .section-heading p{
+            color:#ccc;
+            font-size:17px;
+            line-height:1.7;
+        }
+
+        .concept-grid,
+        .examples-grid,
+        .steps-grid{
+            display:grid;
+            grid-template-columns:repeat(3,minmax(0,1fr));
+            gap:18px;
+        }
+
+        .concept-card,
+        .example-card,
+        .step-card{
+            min-width:0;
+            padding:23px;
+            background:
+                radial-gradient(ellipse at 90% 0%,rgba(255,255,255,0.07),transparent 46%),
+                linear-gradient(145deg,#292929,#151515);
+            border:1px solid #414141;
+            border-radius:21px;
+            box-shadow:0 14px 35px rgba(0,0,0,0.22);
+            transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s;
+        }
+
+        .concept-card:hover,
+        .example-card:hover,
+        .step-card:hover{
+            transform:translateY(-5px);
+            border-color:#888;
+            box-shadow:0 20px 40px rgba(0,0,0,0.34);
+        }
+
+        .concept-icon{
+            display:grid;
+            width:58px;
+            height:58px;
+            margin-bottom:17px;
+            place-items:center;
+            background:linear-gradient(145deg,#505050,#292929);
+            border:1px solid #666;
+            border-radius:18px;
+            font-size:28px;
+        }
+
+        .concept-card h3,
+        .example-card h3,
+        .step-card h3{
+            margin-bottom:10px;
+            color:#fff;
+            font-size:22px;
+        }
+
+        .concept-card p,
+        .example-card p,
+        .step-card p{
+            color:#ccc;
+            font-size:16px;
+            line-height:1.72;
+        }
+
+        .concept-card .example,
+        .example-card .example{
+            margin-top:14px;
+            padding:12px 13px;
+            color:#e5e5e5;
+            background:rgba(255,255,255,0.055);
+            border-radius:10px;
+            font-size:14px;
+            line-height:1.6;
+        }
+
+        .example-card{
+            display:grid;
+            grid-template-columns:68px minmax(0,1fr);
+            align-items:start;
+            gap:15px;
+        }
+
+        .example-card .concept-icon{
+            width:62px;
+            height:62px;
+            margin:0;
+        }
+
+        .steps{
+            background:
+                radial-gradient(ellipse at 90% 6%,rgba(255,255,255,0.08),transparent 36%),
+                linear-gradient(145deg,#171717,#101010);
+            border-top:1px solid #282828;
+            border-bottom:1px solid #282828;
+        }
+
+        .steps .section{padding-top:76px;padding-bottom:76px}
+
+        .step-card{
+            position:relative;
+            padding-top:31px;
+        }
+
+        .step-number{
+            display:grid;
+            width:42px;
+            height:42px;
+            margin-bottom:16px;
+            place-items:center;
+            color:#111;
+            background:linear-gradient(145deg,#f2f2f2,#999);
+            border-radius:14px;
+            font-size:19px;
+            font-weight:bold;
+        }
+
+        .practice{
+            position:relative;
+            padding:clamp(24px,5vw,48px);
+            overflow:hidden;
+            background:
+                radial-gradient(ellipse at 90% 0%,rgba(235,235,235,0.11),transparent 42%),
+                linear-gradient(145deg,#252525,#121212);
+            border:1px solid #4a4a4a;
+            border-radius:28px;
+        }
+
+        .practice-heading{
+            max-width:760px;
+            margin-bottom:25px;
+        }
+
+        .practice-heading h2{
+            margin-bottom:10px;
+            font-size:clamp(30px,4vw,42px);
+        }
+
+        .practice-heading p{
+            color:#ccc;
+            font-size:16px;
+            line-height:1.7;
+        }
+
+        .scenario-grid{
+            display:grid;
+            grid-template-columns:repeat(3,minmax(0,1fr));
+            gap:14px;
+        }
+
+        .scenario-button{
+            min-height:116px;
+            padding:17px;
+            color:#f3f3f3;
+            background:linear-gradient(145deg,#343434,#202020);
+            border:1px solid #5a5a5a;
+            border-radius:16px;
+            font:inherit;
+            font-size:15px;
+            font-weight:bold;
+            line-height:1.5;
+            text-align:left;
+            cursor:pointer;
+            transition:transform 0.2s,border-color 0.2s,background 0.2s;
+        }
+
+        .scenario-button:hover{
+            transform:translateY(-3px);
+            border-color:#aaa;
+            background:linear-gradient(145deg,#444,#252525);
+        }
+
+        .scenario-button[aria-pressed="true"]{
+            border-color:#ddd;
+            box-shadow:0 0 0 2px rgba(255,255,255,0.12);
+        }
+
+        .scenario-feedback{
+            min-height:70px;
+            margin-top:16px;
+            padding:15px 17px;
+            color:#e4e4e4;
+            background:rgba(255,255,255,0.055);
+            border-left:3px solid #aaa;
+            border-radius:10px;
+            font-size:15px;
+            line-height:1.7;
+        }
+
+        .plan{
+            padding:clamp(23px,4vw,36px);
+            background:linear-gradient(145deg,rgba(49,49,49,0.88),rgba(19,19,19,0.96));
+            border:1px solid #454545;
+            border-radius:24px;
+        }
+
+        .plan h3{
+            margin-bottom:10px;
+            font-size:26px;
+        }
+
+        .plan > p{
+            margin-bottom:20px;
+            color:#ccc;
+            line-height:1.7;
+        }
+
+        .plan-list{
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:12px;
+        }
+
+        .plan-item{
+            display:flex;
+            align-items:flex-start;
+            gap:11px;
+            padding:15px;
+            color:#e5e5e5;
+            background:rgba(0,0,0,0.25);
+            border:1px solid #444;
+            border-radius:14px;
+            line-height:1.55;
+            cursor:pointer;
+        }
+
+        .plan-item input{
+            flex:0 0 auto;
+            width:19px;
+            height:19px;
+            margin-top:2px;
+            accent-color:#ddd;
+        }
+
+        .progress{
+            height:11px;
+            margin-top:18px;
+            overflow:hidden;
+            background:#101010;
+            border:1px solid #444;
+            border-radius:999px;
+        }
+
+        .progress span{
+            display:block;
+            width:0;
+            height:100%;
+            background:linear-gradient(90deg,#777,#eee);
+            border-radius:inherit;
+            transition:width 0.3s ease;
+        }
+
+        .progress-label{
+            display:block;
+            margin-top:9px;
+            color:#ddd;
+            font-size:14px;
+        }
+
+        .closing{
+            display:grid;
+            grid-template-columns:minmax(0,1.1fr) minmax(260px,0.9fr);
+            align-items:center;
+            gap:30px;
+            padding:clamp(24px,5vw,42px);
+            background:
+                radial-gradient(ellipse at 88% 20%,rgba(220,220,220,0.12),transparent 42%),
+                linear-gradient(145deg,#111,#242424);
+            border:1px solid #4a4a4a;
+            border-radius:26px;
+            box-shadow:0 22px 60px rgba(0,0,0,0.35);
+        }
+
+        .closing h2{
+            margin-bottom:14px;
+            font-size:clamp(32px,4vw,44px);
+        }
+
+        .closing p{
+            color:#ddd;
+            font-size:17px;
+            line-height:1.8;
+        }
+
+        .closing-art{
+            display:grid;
+            min-height:235px;
+            place-items:center;
+            overflow:hidden;
+            background:radial-gradient(circle at center,#414141,#202020 72%);
+            border:1px solid #555;
+            border-radius:20px;
+        }
+
+        .closing-art svg{
+            width:min(88%,330px);
+            height:auto;
+            animation:flotar 4s ease-in-out infinite;
+        }
+
+        footer{
+            padding:18px 20px 34px;
+            color:#888;
+            font-size:14px;
+            text-align:center;
+        }
+
+        @keyframes flotar{
+            0%,100%{transform:translateY(0)}
+            50%{transform:translateY(-8px)}
+        }
+
+        @keyframes aparecer{
+            from{opacity:0;transform:translateY(18px)}
+            to{opacity:1;transform:translateY(0)}
+        }
+
+        @media(max-width:860px){
+            .hero{
+                min-height:0;
+                grid-template-columns:1fr 0.85fr;
+                gap:25px;
+            }
+
+            .concept-grid,
+            .steps-grid{
+                grid-template-columns:repeat(2,minmax(0,1fr));
+            }
+
+            .examples-grid{
+                grid-template-columns:1fr 1fr;
+            }
+
+            .scenario-grid{grid-template-columns:1fr}
+        }
+
+        @media(max-width:620px){
+            .navbar{padding-right:14px;padding-left:14px}
+            .logo{font-size:18px}
+
+            .hero{
+                width:100%;
+                grid-template-columns:1fr;
+                gap:24px;
+                padding:42px 16px 48px;
+            }
+
+            .hero-copy > p{font-size:17px}
+
+            .section-heading.con-imagen{
+                min-height:190px;
+                padding:24px 18px;
+                border-radius:19px;
+            }
+
+            .section{
+                width:calc(100% - 32px);
+                padding:48px 0;
+            }
+
+            .concept-grid,
+            .examples-grid,
+            .steps-grid,
+            .plan-list{
+                grid-template-columns:1fr;
+            }
+
+            .example-card{
+                grid-template-columns:52px minmax(0,1fr);
+                gap:12px;
+                padding:18px;
+            }
+
+            .example-card .concept-icon{
+                width:50px;
+                height:50px;
+                border-radius:15px;
+                font-size:24px;
+            }
+
+            .practice{border-radius:20px}
+
+            .closing{grid-template-columns:1fr}
+            .closing-art{min-height:200px}
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            *,
+            *::before,
+            *::after{
+                scroll-behavior:auto !important;
+                animation-duration:0.01ms !important;
+                animation-iteration-count:1 !important;
+                transition-duration:0.01ms !important;
+            }
+        }
+        .navbar .menu{
+            display:none;grid-template-columns:minmax(0,1.1fr) minmax(205px,0.9fr);gap:13px;
+            top:calc(100% + 10px);left:max(12px,calc((100% - 1180px) / 2));width:min(660px,calc(100vw - 28px));
+            max-height:calc(100vh - 100px);padding:14px;overflow-y:auto;
+            background:radial-gradient(ellipse at 100% 0%,rgba(248,190,128,0.25),transparent 42%),radial-gradient(ellipse at 0% 100%,rgba(106,203,182,0.22),transparent 48%),linear-gradient(135deg,#3b334b,#263b3b 52%,#473c35);
+            border:1px solid rgba(234,221,201,0.34);border-radius:22px;box-shadow:0 22px 55px rgba(0,0,0,0.52),inset 0 1px rgba(255,255,255,0.16);
+            backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+        }
+        .menu-enlaces{display:grid;align-content:start;gap:4px;min-width:0}
+        .navbar .menu-enlaces a{padding:12px 13px;color:#f0eeeb;background:rgba(16,20,23,0.23);border:1px solid rgba(255,255,255,0.07);border-radius:12px;line-height:1.35;text-decoration:none;transition:background 0.2s,border-color 0.2s,transform 0.2s}
+        .navbar .menu-enlaces a:hover{transform:translateX(3px);color:#fff;background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.2)}
+        .menu-motivacion{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:20px;color:#f8f4ed;background:radial-gradient(circle at 90% 10%,rgba(255,231,180,0.2),transparent 35%),linear-gradient(155deg,rgba(245,207,160,0.17),rgba(127,196,174,0.13) 55%,rgba(179,158,216,0.17));border:1px solid rgba(255,255,255,0.19);border-radius:17px;box-shadow:inset 0 1px rgba(255,255,255,0.12)}
+        .menu-motivacion-etiqueta{display:flex;align-items:center;gap:8px;margin-bottom:13px;color:#f3d6a8;font-size:11px;font-weight:bold;letter-spacing:1.3px}
+        .menu-motivacion-etiqueta::before{width:7px;height:7px;background:#f3d6a8;border-radius:50%;content:"";box-shadow:0 0 12px rgba(243,214,168,0.8)}
+        .menu-motivacion p{margin:0;color:#fff;font-size:clamp(18px,2.1vw,23px);font-weight:bold;line-height:1.42;text-wrap:balance}
+        .menu-motivacion-firma{margin-top:17px;color:rgba(255,255,255,0.7);font-size:12px;line-height:1.45}
+        @media(max-width:620px){.navbar .menu{grid-template-columns:minmax(0,1fr);gap:10px;left:12px;width:calc(100% - 24px);padding:11px;border-radius:18px}.menu-motivacion{min-height:120px;padding:15px 17px}.menu-motivacion p{font-size:18px}}
+        .navbar{
+            position:sticky;top:0;z-index:1100;display:flex;align-items:center;gap:12px;min-height:74px;padding:12px max(20px,calc((100% - 1180px) / 2));
+            background:linear-gradient(110deg,rgba(32,31,29,.98),rgba(43,40,35,.97) 52%,rgba(31,30,28,.98));border-bottom:1px solid rgba(202,183,143,.23);box-shadow:0 12px 34px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.06);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)
+        }
+        .navbar::before{height:2px;background:linear-gradient(90deg,transparent,#8b7959 22%,#d0b982 50%,#8b7959 78%,transparent);opacity:.9;box-shadow:0 0 12px rgba(185,155,99,.18)}
+        .navbar .logo{display:flex;align-items:center;gap:10px;min-height:44px;margin-left:2px;padding:0 15px 0 13px;color:#f3f0e9;background:linear-gradient(100deg,rgba(255,255,255,.07),rgba(255,255,255,.015));border:1px solid rgba(210,192,155,.18);border-radius:999px;font-size:20px;font-weight:bold;letter-spacing:.6px}
+        .navbar .logo::before{display:grid;width:27px;height:27px;place-items:center;color:#29251d;background:linear-gradient(145deg,#d4c296,#9e8c68);border-radius:9px;content:"✦";font-size:15px;box-shadow:0 4px 13px rgba(0,0,0,.24)}
+        .navbar .menu-btn{display:grid;flex:0 0 46px;width:46px;height:46px;place-items:center;padding:0;color:#eeeae1;background:linear-gradient(145deg,#49453d,#292824);border:1px solid rgba(211,195,160,.35);border-radius:14px;box-shadow:0 6px 17px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.1);font-size:25px;cursor:pointer;transition:transform .2s,background .2s,border-color .2s}
+        .navbar .menu-btn:hover{transform:translateY(-2px);background:linear-gradient(145deg,#5a554b,#35322d);border-color:#c4ad7c}
+        .navbar .menu-btn[aria-expanded="true"]{color:#211f1a;background:linear-gradient(135deg,#d5c49b,#b9aa86);border-color:#e5d6b3;transform:rotate(90deg)}
+        .navbar .menu{display:none;position:absolute;top:calc(100% + 10px);left:max(12px,calc((100% - 1180px) / 2));grid-template-columns:minmax(0,1.1fr) minmax(205px,.9fr);gap:13px;width:min(660px,calc(100vw - 28px));max-height:calc(100vh - 100px);padding:14px;overflow-y:auto;background:radial-gradient(ellipse at 100% 0%,rgba(162,136,89,.2),transparent 43%),radial-gradient(ellipse at 0% 100%,rgba(119,112,91,.16),transparent 48%),linear-gradient(135deg,#302e29,#252521 53%,#38332b);border:1px solid rgba(207,187,145,.32);border-radius:20px;box-shadow:0 24px 58px rgba(0,0,0,.62),inset 0 1px rgba(255,255,255,.09);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+        .menu-enlaces{display:grid;align-content:start;gap:5px;min-width:0}
+        .navbar .menu-enlaces a{display:flex;align-items:center;padding:12px 13px;color:#e9e6df;background:rgba(15,15,14,.36);border:1px solid rgba(255,255,255,.065);border-radius:11px;line-height:1.35;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+        .navbar .menu-enlaces a:hover{transform:translateX(3px);color:#fff;background:rgba(189,169,126,.15);border-color:rgba(208,188,145,.32)}
+        .navbar .menu-enlaces a[aria-current="page"]{color:#f1dfb9;background:rgba(190,163,111,.14);border-color:rgba(209,181,128,.3);box-shadow:inset 3px 0 #b69a64}
+        .menu-motivacion{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:20px;color:#f4f0e6;background:radial-gradient(circle at 90% 10%,rgba(190,159,104,.16),transparent 38%),linear-gradient(155deg,rgba(94,82,59,.45),rgba(50,50,44,.72) 55%,rgba(67,58,45,.72));border:1px solid rgba(212,192,152,.22);border-radius:16px;box-shadow:inset 0 1px rgba(255,255,255,.08)}
+        .menu-motivacion-etiqueta{display:flex;align-items:center;gap:8px;margin-bottom:13px;color:#d7c49a;font-size:11px;font-weight:bold;letter-spacing:1.3px}
+        .menu-motivacion-etiqueta::before{width:7px;height:7px;background:#c6ad77;border-radius:50%;content:"";box-shadow:0 0 10px rgba(198,173,119,.45)}
+            .menu-motivacion p{margin:0;color:#fff;font-size:clamp(18px,2.1vw,23px);font-weight:bold;line-height:1.42;text-wrap:balance}
+            .menu-motivacion-firma{margin-top:17px;color:rgba(239,233,218,.68);font-size:12px;line-height:1.45}
+            @media(max-width:620px){.navbar{padding-right:14px;padding-left:14px}.navbar .logo{min-height:40px;padding:0 11px;font-size:16px}.navbar .menu-btn{flex-basis:44px;width:44px;height:44px}.navbar .menu{left:12px;width:calc(100% - 24px);grid-template-columns:minmax(0,1fr);gap:10px;padding:11px;border-radius:17px}.menu-motivacion{min-height:112px;padding:15px 17px}.menu-motivacion p{font-size:18px}}
+
+            body{
+                color:#f1eee6;
+                background-color:#25241f;
+                background-image:
+                    radial-gradient(ellipse at 12% 28%,rgba(164,143,101,.12),transparent 32rem),
+                    radial-gradient(ellipse at 88% 67%,rgba(115,111,91,.1),transparent 34rem),
+                    repeating-linear-gradient(135deg,transparent 0 74px,rgba(216,197,153,.018) 75px 76px),
+                    linear-gradient(145deg,#282722,#22221f 56%,#292720);
+            }
+            .hero{
+                border-bottom:1px solid rgba(196,176,133,.22);
+                background:
+                    radial-gradient(ellipse at 80% 12%,rgba(186,157,100,.2),transparent 34%),
+                    linear-gradient(110deg,rgba(23,22,19,.86),rgba(34,32,27,.58) 55%,rgba(23,22,19,.82)),
+                    url("https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2000&q=85") center / cover;
+            }
+            .hero-etiqueta,.section-etiqueta{
+                color:#e8dcc0;
+                background:linear-gradient(120deg,rgba(91,79,56,.88),rgba(42,40,34,.96));
+                border-color:rgba(206,184,137,.36);
+            }
+            h1 span,.section-heading h2 span{color:#d0bd91}
+            .hero-tip{
+                color:#eee8db;
+                background:linear-gradient(120deg,rgba(133,115,78,.2),rgba(255,255,255,.045));
+                border-left-color:#b49b68;
+            }
+            .hero-media{
+                background:radial-gradient(circle at 50% 50%,#4b4639,#24231f 68%,#191815);
+                border-color:rgba(202,181,137,.3);
+                box-shadow:0 22px 56px rgba(0,0,0,.48);
+            }
+            .hero-video{border-color:rgba(204,183,139,.48)}
+            .section-heading.con-imagen{
+                border-color:rgba(199,179,137,.32);
+                box-shadow:0 20px 48px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.07);
+            }
+            .section-heading-conceptos{
+                background:
+                    radial-gradient(ellipse at 90% 5%,rgba(179,152,98,.2),transparent 42%),
+                    linear-gradient(145deg,#302e28,#201f1c);
+            }
+            .section-heading h2 span{color:#d0bd91}
+            .responsabilidad-imagen-completa{
+                background:linear-gradient(145deg,#39352c,#211f1b);
+                border-color:rgba(199,179,137,.32);
+                box-shadow:0 20px 46px rgba(0,0,0,.34);
+            }
+            .responsabilidad-imagen-completa figcaption{color:#d7d0c1}
+            .concept-card,.example-card,.step-card{
+                background:
+                    radial-gradient(ellipse at 90% 0%,rgba(175,151,101,.12),transparent 46%),
+                    linear-gradient(145deg,#302e28,#211f1c);
+                border-color:rgba(190,171,132,.24);
+                box-shadow:0 15px 36px rgba(0,0,0,.27);
+            }
+            .concept-card:hover,.example-card:hover,.step-card:hover{
+                border-color:rgba(207,185,136,.48);
+                box-shadow:0 21px 42px rgba(0,0,0,.36);
+            }
+            .concept-icon{
+                background:linear-gradient(145deg,#665a41,#39352b);
+                border-color:rgba(211,190,145,.36);
+            }
+            .concept-card h3,.example-card h3,.step-card h3{color:#f0e7d3}
+            .concept-card .example,.example-card .example{
+                background:rgba(170,148,102,.1);
+                border:1px solid rgba(190,169,125,.17);
+            }
+            .steps{
+                background:
+                    radial-gradient(ellipse at 88% 4%,rgba(157,137,94,.12),transparent 38%),
+                    linear-gradient(145deg,#292822,#211f1b);
+                border-color:rgba(190,171,132,.2);
+            }
+            .step-number{
+                color:#29251d;
+                background:linear-gradient(145deg,#d4c296,#9e8c68);
+            }
+            .practice,.plan,.closing{
+                background:
+                    radial-gradient(ellipse at 90% 0%,rgba(179,152,98,.16),transparent 42%),
+                    linear-gradient(145deg,#302e28,#201f1c);
+                border-color:rgba(199,179,137,.3);
+                box-shadow:0 22px 54px rgba(0,0,0,.32);
+            }
+            .scenario-button{
+                color:#f2ead9;
+                background:linear-gradient(145deg,#514a3c,#302e28);
+                border-color:rgba(202,180,132,.4);
+            }
+            .scenario-button:hover{
+                background:linear-gradient(145deg,#625741,#3a352b);
+                border-color:#c7ad78;
+            }
+            .scenario-button[aria-pressed="true"]{
+                border-color:#d0b982;
+                box-shadow:0 0 0 2px rgba(208,185,130,.2);
+            }
+            .scenario-feedback,.plan-item{
+                background:rgba(170,148,102,.1);
+                border-color:rgba(190,169,125,.2);
+            }
+            .scenario-feedback{border-left-color:#b99f69}
+            .plan-item input{accent-color:#c5ae7b}
+            .progress{border-color:rgba(190,171,132,.32)}
+            .progress span{background:linear-gradient(90deg,#86734c,#d0b982)}
+            .closing-art{
+                background:radial-gradient(circle at center,#4b4639,#24231f 72%);
+                border-color:rgba(202,181,137,.28);
+            }
+            footer{color:#a9a393}
+            .responsabilidad-indice{
+                display:flex;
+                width:min(1160px,calc(100% - 40px));
+                flex-wrap:wrap;
+                justify-content:center;
+                gap:11px;
+                margin:24px auto 0;
+                padding:16px;
+                background:linear-gradient(145deg,rgba(48,46,40,.88),rgba(31,30,26,.92));
+                border:1px solid rgba(199,179,137,.24);
+                border-radius:20px;
+                box-shadow:0 14px 34px rgba(0,0,0,.24);
+            }
+            .responsabilidad-indice a{
+                display:flex;
+                min-height:46px;
+                align-items:center;
+                justify-content:center;
+                padding:11px 16px;
+                color:#eee8db;
+                background:linear-gradient(145deg,#514a3c,#302e28);
+                border:1px solid rgba(202,180,132,.3);
+                border-radius:13px;
+                font-size:14px;
+                font-weight:bold;
+                line-height:1.35;
+                text-align:center;
+                text-decoration:none;
+                transition:transform .2s,background .2s,border-color .2s;
+            }
+            .responsabilidad-indice a:hover{
+                transform:translateY(-2px);
+                color:#fff;
+                background:linear-gradient(145deg,#625741,#3a352b);
+                border-color:#c7ad78;
+            }
+            .responsabilidad-indice a:focus-visible{
+                outline:3px solid #d0b982;
+                outline-offset:3px;
+            }
+            @media(max-width:620px){
+                .responsabilidad-indice{width:calc(100% - 32px);gap:8px;padding:12px}
+                .responsabilidad-indice a{flex:1 1 145px;padding:10px 12px}
+            }
+    </style>
+    <link rel="stylesheet" href="../css/tema.css">
+</head>
+<body data-tema="disciplina">
+    <header class="navbar">
+        <button class="menu-btn" type="button" aria-label="Abrir menú de navegación" aria-controls="menu" aria-expanded="false" onclick="toggleMenu()">☰</button>
+        <div class="logo">Construye habilidades</div>
+        <nav class="menu" id="menu" aria-label="Navegación principal">
+            <div class="menu-enlaces">
+            <a href="proyecto.html">🏠 Inicio</a>
+            <a href="habitos.html">📚 Hábitos</a>
+            <a href="juego.html">🎮 Aprende Jugando</a>
+            <a href="desafia%20tu%20conocimiento.html">🧩 Desafía tu conocimiento</a>
+            <a href="toma%20de%20decisiones.html">🌱 Toma de decisiones</a>
+            <a href="autonomia.html">🧠 Autonomía</a>
+            <a href="responsabilidad.html" aria-current="page">🤝 Responsabilidad</a>
+            </div>
+            <aside class="menu-motivacion" aria-label="Mensaje motivador">
+                <span class="menu-motivacion-etiqueta">UN PASO A LA VEZ</span>
+                <p id="frase-motivadora" aria-live="polite"></p>
+                <span class="menu-motivacion-firma">Sigue creciendo a tu ritmo ✨</span>
+            </aside>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" aria-labelledby="titulo-principal">
+            <div class="hero-copy">
+                <span class="hero-etiqueta">CUENTA CONTIGO · CUMPLE TUS ACUERDOS</span>
+                <h1 id="titulo-principal">Crece con <span>responsabilidad</span></h1>
+                <p>Aprende a cumplir tus compromisos, organizar tus tareas y hacerte cargo de tus decisiones. Ser responsable no significa hacerlo todo solo: también es pedir ayuda, avisar a tiempo y reparar cuando algo sale distinto.</p>
+                <p class="hero-tip"><strong>Un primer paso:</strong> elige una cosa importante para hoy y decide cómo vas a recordarla.</p>
+            </div>
+            <aside class="hero-guia" aria-label="Ideas para cumplir tus compromisos">
+                <span class="hero-guia-etiqueta">PASOS QUE SÍ PUEDES DAR</span>
+                <h2>Haz que tus compromisos sean manejables</h2>
+                <p>Una buena organización empieza con acciones claras, realistas y a tu alcance.</p>
+                <ul class="hero-guia-lista">
+                    <li><span>01</span><div><strong>Define lo importante</strong><small>Elige una prioridad para empezar.</small></div></li>
+                    <li><span>02</span><div><strong>Organiza el siguiente paso</strong><small>Divide la tarea y ponle un momento.</small></div></li>
+                    <li><span>03</span><div><strong>Comunica a tiempo</strong><small>Si algo cambia, avisa y busca una solución.</small></div></li>
+                </ul>
+                <a class="hero-guia-link" href="#titulo-pasos">Ver los pasos <span aria-hidden="true">→</span></a>
+            </aside>
+        </section>
+
+        <nav class="responsabilidad-indice" aria-label="Ir directamente a una sección de responsabilidad">
+            <a href="#titulo-conceptos">¿Qué significa?</a>
+            <a href="#titulo-ejemplos">Situaciones cotidianas</a>
+            <a href="#titulo-pasos">Pasos para practicar</a>
+            <a href="#titulo-practica">Elige una respuesta</a>
+            <a href="#titulo-plan">Mi plan semanal</a>
+            <a href="#titulo-cierre">Lo más importante</a>
+        </nav>
+
+        <section class="video-bajo video-bajo-vertical" aria-label="Video sobre responsabilidad">
+            <video class="hero-video" controls preload="metadata" playsinline aria-label="Video sobre responsabilidad">
+                <source src="../mp4/responsabilidad.mp4" type="video/mp4">
+                Tu navegador no puede reproducir el video de responsabilidad.
+            </video>
+        </section>
+
+        <section class="section" aria-labelledby="titulo-conceptos">
+            <div class="section-heading con-imagen section-heading-conceptos">
+                <span class="section-etiqueta">ENTENDER PARA PRACTICAR</span>
+                <h2 id="titulo-conceptos">¿Qué significa ser <span>responsable?</span></h2>
+                <p>Es reconocer qué depende de ti, tomar decisiones cuidadosas y responder de forma honesta por tus acuerdos y acciones.</p>
+            </div>
+            <figure class="responsabilidad-imagen-completa">
+                <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1400&q=85"
+                     alt="Personas compartiendo una comida y colaborando entre sí">
+                <figcaption>La responsabilidad también se demuestra colaborando y cumpliendo los acuerdos con otras personas.</figcaption>
+            </figure>
+            <div class="concept-grid">
+                <article class="concept-card">
+                    <span class="concept-icon" aria-hidden="true">📅</span>
+                    <h3>Cumplir acuerdos</h3>
+                    <p>Cuando aceptas una tarea, una fecha o un turno, haces lo posible por cumplirlo. Si no puedes, lo comunicas pronto en lugar de esperar hasta el último momento.</p>
+                    <p class="example"><strong>Ejemplo:</strong> si prometiste llevar los materiales del equipo, los dejas junto a tu mochila y confirmas con tus compañeros el día anterior.</p>
+                </article>
+                <article class="concept-card">
+                    <span class="concept-icon" aria-hidden="true">🧭</span>
+                    <h3>Elegir con cuidado</h3>
+                    <p>Antes de actuar, piensas cómo tu decisión puede afectarte a ti y a otras personas. Si algo no está claro, preguntas y buscas información confiable.</p>
+                    <p class="example"><strong>Ejemplo:</strong> antes de compartir una foto de un amigo, le pides permiso y respetas su respuesta.</p>
+                </article>
+                <article class="concept-card">
+                    <span class="concept-icon" aria-hidden="true">🛠️</span>
+                    <h3>Hacerte cargo y reparar</h3>
+                    <p>Si cometes un error, lo reconoces sin culpar a otros, explicas lo ocurrido y propones una forma segura y justa de arreglarlo.</p>
+                    <p class="example"><strong>Ejemplo:</strong> si dañaste algo prestado, avisas a la persona dueña y acuerdas cómo ayudar a repararlo o reemplazarlo.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="steps" aria-labelledby="titulo-ejemplos">
+            <div class="section">
+                <div class="section-heading con-imagen section-heading-accion">
+                    <span class="section-etiqueta">SITUACIONES COTIDIANAS</span>
+                    <h2 id="titulo-ejemplos">Responsabilidad en <span>acción</span></h2>
+                    <p>Se practica en pequeñas decisiones de la escuela, la casa, el grupo y los espacios digitales.</p>
+                </div>
+                <div class="examples-grid">
+                    <article class="example-card">
+                        <span class="concept-icon" aria-hidden="true">📚</span>
+                        <div><h3>En los estudios</h3><p>Revisas fechas de entrega, divides un trabajo en partes y preguntas cuando no entiendes las instrucciones.</p><p class="example"><strong>Empieza así:</strong> anota una tarea y el primer paso que puedes hacer hoy.</p></div>
+                    </article>
+                    <article class="example-card">
+                        <span class="concept-icon" aria-hidden="true">🏠</span>
+                        <div><h3>En casa</h3><p>Participas en acuerdos familiares que sean apropiados para tu edad y avisas si necesitas cambiar un plan.</p><p class="example"><strong>Empieza así:</strong> pregunta qué tarea concreta puedes hacer y cuándo esperan que esté lista.</p></div>
+                    </article>
+                    <article class="example-card">
+                        <span class="concept-icon" aria-hidden="true">🤝</span>
+                        <div><h3>Con otras personas</h3><p>Escuchas, respetas turnos y cumples la parte que acordaste en una actividad compartida.</p><p class="example"><strong>Empieza así:</strong> repite el acuerdo con tus palabras para confirmar que entendiste qué te toca.</p></div>
+                    </article>
+                    <article class="example-card">
+                        <span class="concept-icon" aria-hidden="true">🔒</span>
+                        <div><h3>En internet</h3><p>Proteges tus datos y los de otras personas, verificas antes de compartir y pides ayuda si algo te preocupa.</p><p class="example"><strong>Empieza así:</strong> antes de publicar algo de alguien, pregunta si está de acuerdo.</p></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="titulo-pasos">
+            <div class="section-heading con-imagen section-heading-pasos">
+                <span class="section-etiqueta">UNA FORMA SENCILLA DE EMPEZAR</span>
+                <h2 id="titulo-pasos">Cuatro pasos para actuar con <span>responsabilidad</span></h2>
+                <p>No tienes que resolverlo todo de golpe: usa estos pasos para organizarte y pedir apoyo a tiempo.</p>
+            </div>
+            <div class="steps-grid">
+                <article class="step-card"><span class="step-number">1</span><h3>Aclara el acuerdo</h3><p>Confirma qué debes hacer, cuándo y qué materiales necesitas. Si no entiendes algo, pregunta antes de empezar.</p></article>
+                <article class="step-card"><span class="step-number">2</span><h3>Haz un plan posible</h3><p>Divide la tarea en partes pequeñas, escoge cuándo harás la primera y usa un recordatorio que puedas revisar.</p></article>
+                <article class="step-card"><span class="step-number">3</span><h3>Comunica los cambios</h3><p>Si surge un problema, avisa a la persona involucrada con tiempo y propone una alternativa realista.</p></article>
+                <article class="step-card"><span class="step-number">4</span><h3>Revisa y aprende</h3><p>Comprueba qué salió bien. Si algo falló, reconoce tu parte y decide qué apoyo o cambio te ayudaría la próxima vez.</p></article>
+                <article class="step-card"><span class="step-number">+</span><h3>Pide apoyo cuando hace falta</h3><p>Ser responsable no significa cargar con todo. Habla con un adulto de confianza ante una situación peligrosa, injusta o demasiado difícil.</p></article>
+                <article class="step-card"><span class="step-number">✓</span><h3>Reconoce el esfuerzo</h3><p>Valora cuando cumples una parte, aunque el resultado no sea perfecto. Los avances pequeños te enseñan qué estrategias funcionan.</p></article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="titulo-practica">
+            <div class="practice">
+                <div class="practice-heading">
+                    <span class="section-etiqueta">PRUÉBALO · ELIGE UNA RESPUESTA</span>
+                    <h2 id="titulo-practica">¿Qué harías en esta situación?</h2>
+                    <p>Tu equipo tiene que entregar un trabajo mañana. Aún no terminaste tu parte y te das cuenta de que necesitas ayuda. Elige una opción para pensar qué efecto podría tener.</p>
+                </div>
+                <div class="scenario-grid" role="group" aria-label="Opciones para responder a la situación">
+                    <button class="scenario-button" type="button" data-feedback="Avisar ahora permite que el equipo entienda qué falta. Explica qué parte terminaste, pide ayuda con una duda concreta y acuerden cómo continuar sin ocultar el problema." aria-pressed="false">Aviso al equipo y explico qué ayuda necesito.</button>
+                    <button class="scenario-button" type="button" data-feedback="Esperar en silencio puede dejar al equipo sin tiempo para organizarse. Si ya ocurrió, todavía puedes hablar con honestidad, explicar la situación y proponer el siguiente paso." aria-pressed="false">No digo nada y espero que alguien lo resuelva.</button>
+                    <button class="scenario-button" type="button" data-feedback="Inventar una excusa evita la conversación por un momento, pero dificulta reparar el acuerdo y confiar en el equipo. Una explicación sincera ayuda a buscar una solución." aria-pressed="false">Digo que terminé, aunque todavía no sea cierto.</button>
+                </div>
+                <p class="scenario-feedback" id="scenario-feedback" aria-live="polite">Elige una opción para ver qué puedes aprender de ella.</p>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="titulo-plan">
+            <div class="plan">
+                <h3 id="titulo-plan">✅ Mi plan de responsabilidad para esta semana</h3>
+                <p>Marca las acciones que practiques. Puedes elegir solo una para empezar y avanzar a tu ritmo.</p>
+                <div class="plan-list">
+                    <label class="plan-item"><input type="checkbox" class="plan-check"> Anotar un compromiso y su fecha para no olvidarlo.</label>
+                    <label class="plan-item"><input type="checkbox" class="plan-check"> Preparar con tiempo lo que necesito para cumplir una tarea.</label>
+                    <label class="plan-item"><input type="checkbox" class="plan-check"> Avisar con honestidad si necesito ayuda o un cambio de plan.</label>
+                    <label class="plan-item"><input type="checkbox" class="plan-check"> Revisar un error y pensar cómo puedo repararlo.</label>
+                </div>
+                <div class="progress" role="progressbar" aria-label="Progreso del plan de responsabilidad" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><span id="progress-bar"></span></div>
+                <span class="progress-label" id="progress-label" aria-live="polite">0 de 4 acciones completadas.</span>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="titulo-cierre">
+            <div class="closing">
+                <div>
+                    <span class="section-etiqueta">LO MÁS IMPORTANTE</span>
+                    <h2 id="titulo-cierre">Responsabilidad también es aprender</h2>
+                    <p>No se trata de no equivocarse ni de hacerlo todo sin ayuda. Se trata de cumplir acuerdos posibles, hablar con sinceridad y buscar cómo reparar cuando algo sale mal. Cada día puedes practicar con una acción pequeña.</p>
+                </div>
+                <figure class="closing-art">
+                    <svg viewBox="0 0 320 210" role="img" aria-labelledby="titulo-arte-cierre descripcion-arte-cierre" xmlns="http://www.w3.org/2000/svg">
+                        <title id="titulo-arte-cierre">Manos cuidando una planta</title>
+                        <desc id="descripcion-arte-cierre">Una planta crece entre dos manos, símbolo de cuidar compromisos y aprender de las propias acciones.</desc>
+                        <path d="M160 127V54m0 43c-2-24-19-39-44-41 2 24 18 40 44 41Zm0-17c4-24 21-39 46-39-2 24-19 39-46 39Z" fill="#aaa" stroke="#eee" stroke-width="3" stroke-linejoin="round"/>
+                        <path d="M160 89v38" stroke="#eee" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M67 144c17 0 28-7 40-15 8-5 15-2 18 5 2 5-1 9-5 13l-15 11h71c10 0 16 7 13 15-2 5-6 8-13 8H111c-13 0-23-4-32-11l-18-13c-7-5-4-13 6-13Zm186 0c-17 0-28-7-40-15-8-5-15-2-18 5-2 5 1 9 5 13l15 11h-16c-10 0-16 7-13 15 2 5 6 8 13 8h43c13 0 23-4 32-11l18-13c7-5 4-13-6-13Z" fill="#666" stroke="#ddd" stroke-width="3" stroke-linejoin="round"/>
+                        <path d="M160 127c-1 11-2 19-5 28m5-28c1 11 2 19 5 28" fill="none" stroke="#aaa" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="160" cy="37" r="4" fill="#eee"/>
+                    </svg>
+                </figure>
+            </div>
+        </section>
+    </main>
+
+    <footer>Construye habilidades · Aprende y crece con responsabilidad.</footer>
+
+    <script>
+        function toggleMenu(){
+            const menu = document.getElementById("menu");
+            const button = document.querySelector(".menu-btn");
+            const opening = menu.style.display !== "grid";
+            menu.style.display = opening ? "grid" : "none";
+            button.setAttribute("aria-expanded", String(opening));
+            button.setAttribute("aria-label", opening ? "Cerrar menú de navegación" : "Abrir menú de navegación");
+        }
+
+        const scenarioButtons = Array.from(document.querySelectorAll(".scenario-button"));
+        const feedback = document.getElementById("scenario-feedback");
+
+        scenarioButtons.forEach(function(button){
+            button.addEventListener("click", function(){
+                scenarioButtons.forEach(function(option){
+                    option.setAttribute("aria-pressed", String(option === button));
+                });
+                feedback.textContent = button.dataset.feedback;
+            });
+        });
+
+        const planChecks = Array.from(document.querySelectorAll(".plan-check"));
+        const progressBar = document.getElementById("progress-bar");
+        const progressLabel = document.getElementById("progress-label");
+        const progress = document.querySelector(".progress");
+
+        function updateProgress(){
+            const completed = planChecks.filter(function(check){
+                return check.checked;
+            }).length;
+            const percentage = (completed / planChecks.length) * 100;
+            progressBar.style.width = percentage + "%";
+            progress.setAttribute("aria-valuenow", String(completed));
+            progressLabel.textContent = completed + " de " + planChecks.length + " acciones completadas.";
+        }
+
+        planChecks.forEach(function(check){
+            check.addEventListener("change", updateProgress);
+        });
+    </script>
+<script>
+    (function(){
+        const frases=["Cada pequeño paso también cuenta.","No necesitas hacerlo perfecto; solo seguir intentándolo.","Lo que practicas hoy puede convertirse en tu fortaleza de mañana.","Equivocarte es parte de descubrir cómo hacerlo mejor.","Confía en lo que puedes aprender, paso a paso.","Tu esfuerzo de hoy está construyendo algo importante.","Cuando avanzas a tu ritmo, cada logro es tuyo.","Una buena decisión empieza por darte tiempo para pensar.","Pedir apoyo también es una forma valiente de avanzar.","Hoy puedes empezar de nuevo con una idea y un paso."];
+        const clave="frase-motivadora-anterior";
+        const guardada=window.sessionStorage.getItem(clave);
+        const anterior=guardada===null?-1:Number(guardada);
+        const indice=Number.isInteger(anterior)&&anterior>=0&&anterior<frases.length
+            ?(anterior+1+Math.floor(Math.random()*(frases.length-1)))%frases.length
+            :Math.floor(Math.random()*frases.length);
+        const elemento=document.getElementById("frase-motivadora");
+        window.sessionStorage.setItem(clave,String(indice));
+        if(elemento) elemento.textContent=frases[indice];
+    })();
+</script>
+</body>
+</html>
